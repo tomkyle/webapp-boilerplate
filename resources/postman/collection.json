@@ -1,0 +1,461 @@
+{
+	"info": {
+		"name": "tomkyle/webapp-boilerplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Unwanted requests",
+			"item": [
+				{
+					"name": ".env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is '403 Forbidden'\", function () { ",
+									"    pm.response.to.be.clientError;",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/.env",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								".env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "env.dist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is '403 Forbidden'\", function () { ",
+									"    pm.response.to.be.clientError;",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/env.dist",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"env.dist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".htaccess",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is '403 Forbidden'\", function () { ",
+									"    pm.response.to.be.clientError;",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/.htaccess",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								".htaccess"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "htaccess.dist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is '403 Forbidden'\", function () { ",
+									"    pm.response.to.be.clientError;",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/htaccess.dist",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"htaccess.dist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "composer.json",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/composer.json",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"composer.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "composer.lock",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/composer.lock",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"composer.lock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "package.json",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/package.json",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"package.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "package-lock.json",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/package-lock.json",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"package-lock.json"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 400-series Client error\", function () { ",
+							"    pm.response.to.be.clientError;",
+							"});",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "index Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is '200 OK'\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Response has a valid Content-Type header', function() {",
+							"  pm.response.to.have.header('Content-Type');",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('text/html');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}",
+					"host": [
+						"{{LOCALHOST}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "manifest.webmanifest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is '200 OK'\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has 'application/manifest+json' Content-Type\", function () {",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/manifest+json\");    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}/manifest.webmanifest",
+					"host": [
+						"{{LOCALHOST}}"
+					],
+					"path": [
+						"manifest.webmanifest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sitemap.xml",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is '200 OK'\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has 'application/xml' Content-Type\", function () {",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/xml\");    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}/sitemap.xml",
+					"host": [
+						"{{LOCALHOST}}"
+					],
+					"path": [
+						"sitemap.xml"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "favicon.ico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is '200 OK'\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has 'image/x-icon' Content-Type\", function () {",
+							"    pm.response.to.be.header(\"Content-Type\", \"image/x-icon\");    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}/favicon.ico",
+					"host": [
+						"{{LOCALHOST}}"
+					],
+					"path": [
+						"favicon.ico"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "robots.txt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is '200 OK'\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Response has a valid Content-Type header', function() {",
+							"  pm.response.to.have.header('Content-Type');",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}/robots.txt",
+					"host": [
+						"{{LOCALHOST}}"
+					],
+					"path": [
+						"robots.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "humans.txt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is '200 OK'\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Response has a valid Content-Type header', function() {",
+							"  pm.response.to.have.header('Content-Type');",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}/humans.txt",
+					"host": [
+						"{{LOCALHOST}}"
+					],
+					"path": [
+						"humans.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceworker.js",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCALHOST}}/serviceworker.js",
+					"host": [
+						"{{LOCALHOST}}"
+					],
+					"path": [
+						"serviceworker.js"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

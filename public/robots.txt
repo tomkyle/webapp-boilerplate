@@ -1,0 +1,9 @@
+# robots.txt
+# https://developers.google.com/search/docs/advanced/robots/create-robots-txt
+
+# Sitemap
+Sitemap: https://acme.com/sitemap.xml
+
+# Allowing all web crawlers access to all content:
+User-agent: *
+Disallow:

@@ -1,0 +1,136 @@
+// _bootstrap.scss
+
+
+
+// =================================================
+// Prefill Bootstrap colors
+// with values defined in '_variables.scss' module
+// =================================================
+
+// https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss#L299
+// scss-docs-start theme-color-variables
+$primary:       $app-primary   !default;
+$secondary:     $app-secondary !default;
+$success:       $app-success   !default;
+$info:          $app-info      !default;
+$warning:       $app-warning   !default;
+$danger:        $app-danger    !default;
+$light:         $app-light     !default;
+$dark:          $app-dark      !default;
+// scss-docs-end theme-color-variables
+//
+
+//https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss#L402
+$body-bg:                   $app-white !default;
+$body-color:                $app-black !default;
+
+// https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss#L575
+$font-family-sans-serif:      $app-font-stack-sans;
+$font-family-monospace:       $app-font-stack-mono;
+
+// https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss#L530
+// scss-docs-start border-radius-variables
+$border-radius:               0.1rem !default;
+$border-radius-sm:            1px !default;
+$border-radius-lg:            0.15rem !default;
+// scss-docs-end border-radius-variables
+//
+
+
+
+
+// =================================================
+// Import certain parts of Bootstrap
+// =================================================
+
+// See:
+// - https://getbootstrap.com/docs/5.1/customize/sass/
+// - https://github.com/twbs/bootstrap/tree/v5.1.3/scss
+// - https://github.com/twbs/bootstrap/blob/v5.1.3/scss/bootstrap.scss
+// - https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss
+
+
+// -------------------------------------------------
+// scss-docs-start import-stack
+// -------------------------------------------------
+
+// Configuration
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/utilities";
+
+// Layout & components
+@import "node_modules/bootstrap/scss/root";
+@import "node_modules/bootstrap/scss/reboot";
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/images";
+// @import "node_modules/bootstrap/scss/containers";
+// @import "node_modules/bootstrap/scss/grid";
+// @import "node_modules/bootstrap/scss/tables";
+@import "node_modules/bootstrap/scss/forms";
+@import "node_modules/bootstrap/scss/buttons";
+//@import "node_modules/bootstrap/scss/transitions";
+//@import "node_modules/bootstrap/scss/dropdown";
+//@import "node_modules/bootstrap/scss/button-group";
+//@import "node_modules/bootstrap/scss/nav";
+//@import "node_modules/bootstrap/scss/navbar";
+//@import "node_modules/bootstrap/scss/card";
+//@import "node_modules/bootstrap/scss/accordion";
+//@import "node_modules/bootstrap/scss/breadcrumb";
+//@import "node_modules/bootstrap/scss/pagination";
+//@import "node_modules/bootstrap/scss/badge";
+//@import "node_modules/bootstrap/scss/alert";
+//@import "node_modules/bootstrap/scss/progress";
+//@import "node_modules/bootstrap/scss/list-group";
+//@import "node_modules/bootstrap/scss/close";
+//@import "node_modules/bootstrap/scss/toasts";
+//@import "node_modules/bootstrap/scss/modal";
+//@import "node_modules/bootstrap/scss/tooltip";
+//@import "node_modules/bootstrap/scss/popover";
+//@import "node_modules/bootstrap/scss/carousel";
+//@import "node_modules/bootstrap/scss/spinners";
+//@import "node_modules/bootstrap/scss/offcanvas";
+//@import "node_modules/bootstrap/scss/placeholders";
+
+// Helpers
+@import "node_modules/bootstrap/scss/helpers";
+
+// Utilities
+@import "node_modules/bootstrap/scss/utilities/api";
+
+// -------------------------------------------------
+// scss-docs-end import-stack
+// -------------------------------------------------
+
+
+
+// =================================================
+// Override Bootstrap code flaws:
+//
+// Some Bootstrap features require multiple CSS selectors,
+// such as 'class="btn btn-primary"'
+//
+// This section maps 'simpler' selectors to those
+// defined by Bootstrap.
+// =================================================
+
+
+[class="button"],
+button {
+  @extend .btn, .btn-primary;
+}
+
+input:not([type="radio"],[type="checkbox"]),
+textarea {
+  @extend .form-control;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  @extend .form-check-input
+}
+
+select {
+  @extend .form-select;
+}

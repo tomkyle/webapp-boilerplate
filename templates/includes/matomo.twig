@@ -1,0 +1,19 @@
+<!-- Begin Matomo -->
+{%  if requireKlaroConsent is defined and requireKlaroConsent %}
+<script type="text/plain" data-type="text/javascript" data-name="matomo">
+{% else %}
+<script>
+{% endif %}
+var _paq = window._paq = window._paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['trackAllContentImpressions']);
+_paq.push(['enableLinkTracking']);
+(function() {
+	var u="{{baseUrl}}";
+	_paq.push(['setTrackerUrl', u+'matomo.php']);
+	_paq.push(['setSiteId', '{{siteId}}']);
+	var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+})();
+</script>
+<!-- End Matomo Code -->

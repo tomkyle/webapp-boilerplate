@@ -1,0 +1,176 @@
+# csp.dist.yaml
+
+
+# This file configures the Content-Security-Policy settings,
+# as proposed and used with
+#
+# Paragonie's "Content Security Policy Builder":
+# https://github.com/paragonie/csp-builder
+#
+# The settings will then be applied by the CSP Middleware:
+# middlewares/csp
+# https://github.com/middlewares/csp
+#
+# Apache Server Configs
+# https://github.com/h5bp/server-configs-apache
+
+
+# ------------------------------------------------------------
+# Read more:
+# ------------------------------------------------------------
+
+# Content Security Policy Reference
+# https://content-security-policy.com/
+#
+# MDN Web Docs: Content-Security-Policy
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+#
+# "CSP Evaluator"
+# https://csp-evaluator.withgoogle.com/
+
+
+# ------------------------------------------------------------
+# Typical sources:
+# ------------------------------------------------------------
+
+# default-src
+# child-src
+# connect-src
+# font-src
+# frame-src
+# img-src
+# manifest-src
+# media-src
+# object-src
+# prefetch-src
+# script-src
+# script-src-elem
+# script-src-attr
+# style-src
+# style-src-elem
+# style-src-attr
+# worker-src
+
+
+# ------------------------------------------------------------
+# Example
+# ------------------------------------------------------------
+
+# default-src:
+#     self: true
+#     unsafe-inline: true
+#     unsafe-eval: true # needed for obscure reasons
+#     data: true
+#     allow:
+#         - localhost
+#         - cdnjs.cloudflare.com
+#         - via.placeholder.com
+#         - use.typekit.net
+#         - fonts.googleapis.com
+#         - fonts.gstatic.com
+#         - "*.google-analytics.com"
+#         - "*.googletagmanager.com"
+#         - www.google-analytics.com/analytics.js
+#         - www.googletagmanager.com/gtag/js
+#         - "www.youtube-nocookie.com"
+#         - "*.youtube-nocookie.com"
+
+
+# ------------------------------------------------------------
+# Configuration
+#
+# These settings adhere to those used in H5BP Apache Server Configs
+#
+# https://github.com/h5bp/server-configs-apache
+# https://github.com/h5bp/server-configs-apache/blob/main/h5bp/security/content-security-policy.conf
+# ------------------------------------------------------------
+
+
+#      Forces the browser to treat all the resources that are served over HTTP
+#      as if they were loaded securely over HTTPS by setting the
+#      `upgrade-insecure-requests` directive.
+#
+#      Please note that `upgrade-insecure-requests` does not ensure HTTPS for
+#      the top-level navigation. If you want to force the website itself to be
+#      loaded over HTTPS you must include the `Strict-Transport-Security`
+#      header.
+upgrade-insecure-requests: true
+
+
+#      Restrict all fetches by default to the origin of the current website by
+#      setting the `default-src` directive to `'self'` - which acts as a
+#      fallback to all "Fetch directives" (https://developer.mozilla.org/en-US/docs/Glossary/Fetch_directive).
+#
+#      This is convenient as you do not have to specify all Fetch directives
+#      that apply to your site, for example:
+#      `connect-src 'self'; font-src 'self'; script-src 'self'; style-src 'self'`, etc.
+#
+#      This restriction also means that you must explicitly define from which
+#      site(s) your website is allowed to load resources from.
+default-src:
+    self: true
+
+
+#      The `<base>` element is not allowed on the website. This is to prevent
+#      attackers from changing the locations of resources loaded from relative
+#      URLs.
+#
+#      If you want to use the `<base>` element, then `base-uri 'self'` can be
+#      used instead.
+#
+#      In order to set directive to 'none', set this to empty array: []
+base-uri: []
+
+
+#      Prevents all websites (including your own) from embedding your webpages
+#      within e.g. the `<iframe>` or `<object>` element by setting:
+#      `frame-ancestors 'none'`.
+#
+#      The `frame-ancestors` directive helps avoid "Clickjacking" attacks and
+#      is similar to the `X-Frame-Options` header.
+#
+#      Browsers that support the CSP header should ignore `X-Frame-Options` if
+#      `frame-ancestors` is also specified.
+#
+#      In order to set directive to 'none', set this to empty array: []
+frame-ancestors: []
+
+
+font-src:
+    self: true
+    data: true
+
+
+img-src:
+    self: true
+    data: true
+
+
+#      Elements controlled by `object-src` are perhaps coincidentally
+#      considered legacy HTML elements and are not receiving new standardized
+#      features (such as the security attributes `sandbox` or `allow` for
+#      `<iframe>`).
+#      Therefore it is recommended to restrict this fetch-directive (e.g.,
+#      explicitly set `object-src 'none'` if possible).
+#
+#      In order to set directive to 'none', set this to empty array: []
+object-src:      []
+
+
+#      Specifies valid sources for JavaScript.
+#      This includes not only URLs loaded directly into <script> elements,
+#      but also things like inline script event handlers (onclick)
+#      and XSLT stylesheets which can trigger script execution.
+script-src:
+    self: true
+    unsafe-inline: true
+    unsafe-eval: true
+
+
+#      Form submissions are only allowed from the current website by setting:
+#      `form-action 'self'`.
+#
+#      In order to set directive to 'none', set this to empty array: []
+form-action:
+    self: true
+

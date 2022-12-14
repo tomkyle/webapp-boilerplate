@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+use function App\dotenv;
+
+$root_path  = dirname( __DIR__ );
+require_once $root_path . '/vendor/autoload.php';
+
+
+//
+// Setup DIC
+//
+$dic = require $root_path . '/core/container.php';
+
+
+//
+// Setup Error reporting
+//
+$error_reporting_value = dotenv('PHP_ERROR_REPORTING');
+error_reporting( $error_reporting_value );
+
+
+//
+// Setup Symfony Console app
+//
+$application = $dic->get(\Symfony\Component\Console\Application::class);
+$application->run();

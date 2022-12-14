@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# ---------------------------------------
+# Runtime Environment
+# ---------------------------------------
+
+set -o errexit  # -e
+set -o nounset  # -u
+set -o errtrace  # -E
+# set -o xtrace # -x
+set -o pipefail
+
+
+# --------------------------------------
+# Output and formatting stuff
+# Color codes: https://gist.github.com/vratiu/9780109
+# --------------------------------------
+
+readonly C_RED='\e[1;31m'
+readonly C_BLUE='\e[1;34m'
+readonly C_GREEN='\e[1;32m'
+readonly C_GRAY='\e[1;90m'
+readonly NC='\e[0m' # No Color
+
+function e_info {
+  echo -e "${C_BLUE}${*}${NC}"
+}
+function e_success () {
+	echo -e "${C_GREEN}● Success:${NC} ${*-}"
+}
+function e_error {
+	echo -e >&2 "${C_RED}● Error:${NC} ${*-}";
+	exit 1;
+}
+
+# --------------------------------------
+# Requirements
+# --------------------------------------
+
+function require  {
+	command -v "${1}" >/dev/null 2>&1 || e_error "$(printf "Program '%s' required, but it's not installed" "${1}")"
+}
+
+require npx
+
+
+# --------------------------------------
+# Settings
+# --------------------------------------
+
+FAV_PATH="public/favicons"
+SRC_FILE="favicon.svg"
+HTDOCS_PATH="public"
+declare -a FAV_SIZES=(32 48 64 96 180 192 512)
+
+
+# --------------------------------------
+# Business
+#
+# https://github.com/shakiba/svgexport
+#
+# --------------------------------------
+
+for size in "${FAV_SIZES[@]}"
+do
+  	npx svgexport "${FAV_PATH}/${SRC_FILE}" "${FAV_PATH}/favicon-${size}px.png" $size: 2>&1 > /dev/null && e_success "${FAV_PATH}/favicon-${size}px.png"
+done
+
+npx convert \
+"${FAV_PATH}/favicon-32px.png" \
+"${FAV_PATH}/favicon-48px.png" \
+"${FAV_PATH}/favicon-64px.png" \
+"${FAV_PATH}/favicon-96px.png" \
+"${HTDOCS_PATH}/favicon.ico" && e_success "${HTDOCS_PATH}/favicon.ico (contains 32/48/64/96px)"

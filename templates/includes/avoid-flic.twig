@@ -1,0 +1,4 @@
+<script>(async () => {
+let theme = localStorage.getItem('{{localStorageId|default('theme')}}');
+!! theme && document.documentElement.classList.add(theme);
+})();</script>

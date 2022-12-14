@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de" xml:lang="de" prefix="og: http://ogp.me/ns#">
+<head>
+<title>{{title}}</title>
+<meta charset="utf-8">
+<meta name="title"        content="{{title|default("")}}">
+<meta name="description"  content="{{description|default("")}}">
+{% if themeColors is defined and themeColors %}
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color"  media="(prefers-color-scheme: light)" content="{{themeColors.light}}">
+<meta name="theme-color"  media="(prefers-color-scheme: dark)"  content="{{themeColors.dark}}">
+{% endif %}
+<meta name="viewport"     content="width=device-width, initial-scale=1">
+<meta name="robots"       content="{{robots}}">
+{% include '@includes/avoid-flic.twig' %}
+{% if matomo is defined and matomo and matomo.siteId|default(null) %}
+{% include '@includes/matomo.twig' with matomo only %}
+{% endif %}
+<link rel="stylesheet"       href="/assets/styles.css">
+<link rel="icon"             href="/favicon.ico" sizes="any">
+<link rel="icon"             href="/favicons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicons/favicon-180px.png">
+<link rel="manifest"         href="/manifest.webmanifest">
+<script type="module" src="/assets/index.mjs"></script>
+</head>
+<body>
+{% block documentBody %}{% endblock %}
+</body>
+</html>

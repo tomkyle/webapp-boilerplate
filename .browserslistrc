@@ -1,0 +1,12 @@
+# Browsers that we support
+# Playground: https://browsersl.ist
+
+### Normally, these should do ...
+# > 0.25%
+# not dead
+
+### This prevents console errors by Mapbox GL JS
+> 0.25%
+not dead
+not android < 51
+last 4 chrome versions

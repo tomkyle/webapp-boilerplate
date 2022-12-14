@@ -1,0 +1,127 @@
+# routes.dist.yaml
+
+
+# This tells germania-kg/configreader to exclude
+# certain items from parsed YAML result
+_ignore:
+    - defaultContext
+    - defaultRoute
+    - defaultHtmlPage
+    - defaultTestFixtures
+
+
+# Default template variables
+defaultContext: &defaultContext
+    # About
+    title:           Your page title
+    description:     Your page description
+    robots:          noindex,nofollow
+    themeColors:
+        light: white
+        dark:  black
+
+    # Twig template to use
+    template:    website.twig
+
+
+
+defaultTestFixtures: &defaultTestFixtures
+    default:
+        via:         GET
+        statusCode:  200
+        contentType: "text/html"
+
+# Keys are route names
+# - via:           Allowed HTTP methods
+# - url:           s.th. like "/path/to/page"
+# - action:        RequestHandler class (DI definition name)
+# - sitemap:       Show in sitemap; allowed BOOLEAN or float value
+# - middlewares:   Route middleware Container names
+# - context:       Default template variables (Slim: "route arguments")
+# - testFixtures:  Configure integration test fixtures. If left empty,
+#                  test will look for text/html with status 200 OK
+
+defaultRoute: &defaultRoute
+    via: GET
+    url:
+    action: App\Actions\TwigRequestHandler
+    sitemap: false
+    middlewares: []
+    context:
+        <<: *defaultContext
+
+    # Used for integration tests
+    testFixtures:
+        <<: *defaultTestFixtures
+
+
+
+defaultHtmlPage: &defaultHtmlPage
+    <<: *defaultRoute
+    sitemap: true
+    middlewares:
+        - Middlewares\Csp
+
+
+
+# -------------------------------------------------------------
+# Index / Home page
+# -------------------------------------------------------------
+index:
+    <<: *defaultHtmlPage
+    url: "/"
+
+    context:
+        <<: *defaultContext
+        template:    "@actions/index.twig"
+        title:       Index Page
+
+
+
+# -------------------------------------------------------------
+# Sitemap
+# -------------------------------------------------------------
+sitemap:
+    <<: *defaultRoute
+    url    : "/sitemap.xml"
+    action: App\Actions\Sitemap
+    context:
+        <<: *defaultContext
+        template: "@actions/sitemap.twig"
+    testFixtures:
+        default:
+            via:         GET
+            statusCode:  200
+            contentType: "application/xml"
+
+
+# -------------------------------------------------------------
+# Offline page
+# (also mentioned in scripts/serviceworker.js)
+# -------------------------------------------------------------
+offline:
+    <<: *defaultHtmlPage
+    url: "/offline"
+    sitemap: false
+    context:
+        <<: *defaultContext
+        template:    "@actions/offline.twig"
+        title:       Just offline
+
+
+# -------------------------------------------------------------
+# Webmanifest
+# (also mentioned in scripts/serviceworker.js)
+# -------------------------------------------------------------
+webmanifest:
+    <<: *defaultRoute
+    via: GET
+    url: "/manifest.webmanifest"
+    action: App\Actions\Webmanifest
+    context: []
+    testFixtures:
+        default:
+            via:         GET
+            statusCode:  200
+            contentType: "application/manifest+json"
+

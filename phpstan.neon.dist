@@ -1,0 +1,22 @@
+# phpstan.neon.dist
+
+
+parameters:
+    level: 7
+
+    paths:
+        - bin
+        - core
+        - src
+        - tests
+
+    ignoreErrors:
+        -
+          # Examples:
+          #
+          # Parameter #2 $foo of callable Vendor\MyClass expects bool|string, int|false given
+          # Parameter #1 $expected of method PHPUnit\Framework\Assert::assertInstanceOf() expects class-string<object>, string given.
+          #
+          message: '#Parameter \#[0-9]+ \$[a-zA-Z0-9_]+ of .+ expects [a-zA-Z0-9\|\-_\\<>]+, [a-zA-Z0-9\|\\]+ given#'
+          path: tests/*.php
+

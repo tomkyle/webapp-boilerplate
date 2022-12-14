@@ -1,0 +1,25 @@
+// styles.scss
+
+@use "variables" as *;
+
+//
+// Map variables to CSS variables
+//
+@import "root";
+
+
+//
+// Choose Framework.
+//
+// For small projects, "tomkyle" should be plenty.
+//
+
+// @import "bootstrap";
+@import "tomkyle";
+
+
+
+body {
+  max-width: min(calc(100vw - 2rem), #{$app-body-max-width});
+  margin: 0 auto;
+}

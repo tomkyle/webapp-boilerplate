@@ -1,0 +1,112 @@
+// _root.scss
+
+// Purpose of this file:
+// - Store the defined variables as custom properties
+// - Setup light + dark schemes
+
+@use "variables" as *;
+@use "sass:color";
+
+
+
+@mixin lightMode {
+  // Forefround and background
+  --app-fg-color:      #{$app-black};
+  --app-bg-color:      #{$app-white};
+
+  // For specials boxes like blockquotes and boxes
+  --app-special-bg:    #{color.adjust($app-white, $lightness: -5%)};
+  --app-special-fg:    #{color.adjust($app-white, $lightness: -20%)};
+
+  // Text selection
+  --app-selection-fg:  #{$app-selection-fg-light};
+  --app-selection-bg:  #{$app-selection-bg-light};
+
+  // Buttons
+  --app-btn-fg:        #{$app-white};
+  --app-btn-bg:        #{$app-primary};
+  --app-btn-bg-hover:  #{color.adjust($app-primary, $lightness: -7%)};
+
+  // Accent color (certain inputs)
+  --app-accent-color:  var(--app-btn-bg);
+}
+
+
+@mixin darkMode {
+  // Forefround and background
+  --app-fg-color:      #{color.adjust($app-white, $lightness: -7%)};
+  --app-bg-color:      #{color.adjust($app-black, $lightness: 7%)};
+
+  // For specials boxes like blockquotes and boxes
+  --app-special-bg:    #{color.adjust($app-black, $lightness: +5%)};
+  --app-special-fg:    #{color.adjust($app-white, $lightness: +20%)};
+
+  // Text selection
+  --app-selection-fg:  #{$app-selection-fg-dark};
+  --app-selection-bg:  #{$app-selection-bg-dark};
+
+  // Buttons
+  // ...may stay the same, only switch lightness
+  --app-btn-fg:        #{$app-white};
+  --app-btn-bg:        #{color.adjust($app-primary, $lightness: -7%)};
+  --app-btn-bg-hover:  #{$app-primary};
+}
+
+
+
+
+
+:root {
+  color-scheme: light dark; /* both supported */
+
+  @include lightMode;
+
+  // Set base font size
+  // These typo size scale was created here:
+  // https://www.fluid-type-scale.com/
+
+  --app-font-size-sm:   clamp(0.8rem,   0.06vw + 0.78rem, 0.83rem);
+  --app-font-size-base: clamp(1rem,     0.45vw + 0.89rem, 1.25rem);
+  --app-font-size-md:   clamp(1.25rem,  1.14vw + 0.97rem, 1.88rem);
+  --app-font-size-lg:   clamp(1.56rem,  2.27vw + 0.99rem, 2.81rem);
+  --app-font-size-xl:   clamp(1.95rem,  4.12vw + 0.92rem, 4.22rem);
+  --app-font-size-xxl:  clamp(2.44rem,  7.07vw + 0.67rem, 6.33rem);
+  --app-font-size-xxxl: clamp(3.05rem, 11.71vw + 0.12rem, 9.49rem);
+
+  // Font weights
+  --app-font-weight-body:       #{$app-font-weight-body-light};
+  --app-font-weight-heading:    #{$app-font-weight-heading-light};
+  --app-font-weight-bold:       #{$app-font-weight-bold-light};
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include darkMode;
+
+    // Font weights
+    --app-font-weight-body:     #{$app-font-weight-body-dark};
+    --app-font-weight-heading:  #{$app-font-weight-heading-dark};
+    --app-font-weight-bold:     #{$app-font-weight-bold-dark};
+  }
+}
+
+
+html.light-mode {
+  @include lightMode;
+}
+
+html.dark-mode {
+  @include darkMode;
+}
+
+html.color-theme-in-transition {
+  & *,
+  & *:before,
+  & *:after {
+    transition: all 400ms !important;
+    transition-delay: 0 !important;
+  }
+}
+

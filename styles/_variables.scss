@@ -1,0 +1,103 @@
+// _variables.scss
+@use "sass:math";
+
+
+
+
+//
+// Change this to make your CSS variables your own
+// Concept stolen from Bootstrap 5.
+// https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss#L353
+// $prefix: app- !default;
+// $variable-prefix: $prefix !default;
+
+
+
+// ----------------------------------------------
+// Global layout
+// ----------------------------------------------
+
+$app-body-max-width  : 50em;
+$app-default-padding :  2rem;
+
+
+// ----------------------------------------------
+// App colors
+//
+// Make sure to put one of them in Webmanifest configuration
+// (elements "theme_color" and "background_color")
+// and in route configurations ("themeColors")
+//
+// Need to generate a palette? -> https://coolors.co/
+// ----------------------------------------------
+
+
+$app-white:     #ffffff;
+$app-black:     #000000;
+
+
+$app-selection-bg-light: #79FFE1;
+$app-selection-fg-light: #0C4047;
+
+$app-selection-bg-dark:  #7928CA;
+$app-selection-fg-dark:  #FFFFFF;
+
+
+
+// Color values stolen from Bootstrap
+// Original values in comments on right side
+$app-light:     #f8f9fa; // $gray-100
+$app-dark:      #212529; // $gray-900
+
+$app-primary:   #6200ee; // $blue
+$app-secondary: #03dac6; // $gray-600
+
+$app-success:   #198754; // $green
+$app-info:      #0dcaf0; // $cyan
+$app-warning:   #ffc107; // $ffc107
+$app-danger:    #b00020; // $dc3545
+
+
+
+
+// ----------------------------------------------
+// Typography
+// ----------------------------------------------
+
+//
+// Font stacks
+// (stolen from Bootstrap 5)
+//
+$app-font-stack-sans:  system-ui, -apple-system,
+                       "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans",
+                       "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+                       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+$app-font-stack-mono:  SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+
+//
+// Font weights
+//
+
+$app-font-weight-body:            400;
+$app-font-weight-body-light:      400;
+$app-font-weight-body-dark:       350;
+
+$app-font-weight-bold:            600;
+$app-font-weight-bold-light:      600;
+$app-font-weight-bold-dark:       550;
+
+$app-font-weight-heading:         500;
+$app-font-weight-heading-light:   500;
+$app-font-weight-heading-dark:    450;
+
+
+//
+// Other basics
+//
+$app-line-height-base:            1.6 !default;
+$app-line-height-sm:              1.4 !default;
+$app-line-height-lg:              2   !default;
+
+

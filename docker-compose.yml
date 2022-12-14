@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  app:
+    container_name: tomkyle-webapp-boilerplate
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+
+    environment:
+      - DOCKER=1
+
+
+    ports:
+      - "8080:80"
+      - "443:443"
+
+    volumes:
+      - ./:/var/www
+      # Must match 'DocumentRoot' entry in VirtualHost config
+      - ./public/:/var/www/public
+      - ./resources/docker/ssl/:/etc/apache2/ssl
+      - ./resources/docker/sites-available/:/etc/apache2/sites-available
+

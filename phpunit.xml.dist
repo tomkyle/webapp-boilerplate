@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	colors="true"
+	stopOnFailure="true"
+	bootstrap="tests/bootstrap.php"
+	beStrictAboutCoversAnnotation="true"
+	verbose="true"
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory>src</directory>
+      <directory>bin</directory>
+      <directory>core</directory>
+    </include>
+    <report>
+      <clover outputFile="tests/build/clover.xml"/>
+      <html outputDirectory="tests/build/html/"/>
+      <text outputFile="php://stdout" showUncoveredFiles="true"/>
+    </report>
+  </coverage>
+
+	<php>
+		<var name="LOG_STREAM" value="php://stdout" />
+		<var name="LOG_LEVEL" value="info" />
+	</php>
+
+  <testsuites>
+    <testsuite name="unit">
+      <directory>tests/unit</directory>
+    </testsuite>
+    <testsuite name="integration">
+      <directory>tests/integration</directory>
+    </testsuite>
+  </testsuites>
+
+  <logging>
+    <testdoxHtml outputFile="tests/build/testdox.html"/>
+    <testdoxText outputFile="tests/build/testdox.txt"/>
+  </logging>
+</phpunit>

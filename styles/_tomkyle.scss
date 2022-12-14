@@ -1,0 +1,133 @@
+// _tomkyle.scss
+
+
+// ----------------------------------------------
+// Use "@exampledev/new.css" as base
+// and override their hardcoded values
+// ----------------------------------------------
+
+@import '../node_modules/@exampledev/new.css/new';
+
+
+
+:root {
+
+  --nc-font-sans: #{$app-font-stack-sans};
+  --nc-font-mono: #{$app-font-stack-mono};
+
+  --nc-tx-1:  var(--app-fg-color);   /* headlines */
+  --nc-tx-2:  var(--app-fg-color);   /* body-fg */
+  --nc-bg-1:  var(--app-bg-color);   /* body-bg */
+  --nc-bg-2:  var(--app-special-bg); /* header, blockquote, code ... */
+  --nc-bg-3:  var(--app-special-fg); /* some borders */
+  --nc-lk-1:  var(--app-btn-bg);       /* links and buttons */
+  --nc-lk-2:  var(--app-btn-bg-hover); /* links and buttons (hover) */
+  --nc-lk-tx: var(--app-btn-fg);       /* links and buttons (text-color) */
+  --nc-ac-1:  var(--app-selection-bg); /* ::selection */
+  --nc-ac-tx: var(--app-selection-fg); /* ::selection (text-color)*/
+
+}
+
+body {
+  color:        var(--app-fg-color);
+  background:   var(--app-bg-color);
+}
+
+
+
+// ------------------------------
+// Stolen from Bootstrap's reboot
+// ------------------------------
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+
+// ------------------------------
+// Buttons
+// ------------------------------
+
+
+// For obscure reasons, new.css defines button styles for
+// "a button" but not "a.button" or ".button".
+//.button {
+//  @extend button;
+//}
+
+
+
+%button {
+  display          : inline-block;
+  line-height      : 2em;
+  padding          : 0 0.75em 0.2em;
+
+  font-size        : inherit;
+  font-size        : var(--app-font-size-base);
+  white-space      : nowrap;
+  text-align       : center;
+  text-decoration  : none;
+
+  outline          : 0;
+  border           : 0;
+  border-radius    : 0.2rem;
+
+  cursor           : pointer;
+
+  color            : var(--app-btn-fg);
+  background-color : var(--app-btn-bg);
+
+  &:hover {
+      background-color: var(--app-btn-bg-hover);
+  }
+}
+
+
+
+a.button,
+.buttons > a,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"]  {
+  @extend %button;
+}
+
+
+
+// ------------------------------
+// Typography
+// ------------------------------
+
+body {
+  font-family:  $app-font-stack-sans;
+  font-weight:  var(--app-font-weight-body);
+  font-size:    var(--app-font-size-base);
+  line-height:  $app-line-height-base;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--app-font-weight-heading);
+}
+
+
+summary, dt, table caption,
+b, strong, dt, th {
+  font-weight: var(--app-font-weight-bold);
+}
+
+
+
+p.lead {
+  font-size: var(--app-font-size-md);
+  line-height: $app-line-height-sm;
+}
+
+
+code, samp, kbd, pre {
+  font-size: var(--app-font-size-sm);
+}
+

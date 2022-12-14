@@ -1,0 +1,12 @@
+{# sitemap.twig #}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for key,item in items %}
+{% set priorityValue = item.sitemap %}
+<url>
+	<loc>{{baseUrl|default('NO')}}{{item.url}}</loc>
+	{# Google will ignore <priority> und <changefreq>. -#}
+	<priority>{{priorityValue}}</priority>
+</url>
+{% endfor %}
+</urlset>

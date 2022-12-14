@@ -1,0 +1,127 @@
+# app.dist.yaml
+
+
+
+#
+# Application Middlewares
+#
+middlewares: []
+
+
+#
+# Application Routes Definition Files
+# (YAML files)
+#
+routeDefinitions:
+    # Part of the repo
+    - routes.dist.yaml
+
+    # Not part of the repo (local only)
+    - routes.yaml
+
+
+#
+# Twig templating
+#
+twig:
+    # Relative to TEMPLATES_DIR environment variable
+    # See 'Twig\Loader\FilesystemLoader' in DI Container
+    templateNamespaces:
+        actions:  '/actions'
+        includes: '/includes'
+
+    # Options parameter for Twig\Enviroment
+    # See 'Twig.Environment.Options' in DI Container
+    environmentOptions:
+        autoescape:       false
+
+        # Leave these empty or set to 'null' to derive
+        # them from IS_DEVELOPMENT environment variable
+        debug:
+        auto_reload:
+        strict_variables:
+
+
+#
+# Matomo Analytics
+#
+# Set to FALSE to disable
+#
+# Make sure to add your baseUrl to csp.dist.yaml
+#
+matomo:
+
+    # Matomo Site ID.
+    # Its value is 1 quite often.
+    # Leave this empty to disable Matomo
+    # siteId: 1
+    siteId:
+
+    # When using klaro.js consent tool
+    requireKlaroConsent: true
+
+    # FQDN of your matomo installation
+    # Mind the trailing slash!
+    baseUrl: "/matomo/"
+
+
+#
+# Monolog Logger
+#
+monolog:
+    handlers:
+        - Monolog\Handler\RotatingFileHandler
+
+    processors:
+        - Monolog\Processor\PsrLogMessageProcessor
+        - Monolog\Processor\WebProcessor
+
+
+#
+# Webmanifest
+#
+# Useful links:
+# - https://developer.mozilla.org/en-US/docs/Web/Manifest
+# - https://web.dev/add-manifest/
+webmanifest:
+    name: "My App"
+    short_name: "My App"
+    description: "Short description"
+    start_url: "/?source=pwa"
+    icons:
+        - src: '/favicons/favicon-192px.png'
+          type: image/png
+          sizes: 192x192
+          purpose: "any"
+
+        - src: '/favicons/favicon-192px.png'
+          type: image/png
+          sizes: 192x192
+          purpose: "maskable"
+
+        - src: '/favicons/favicon-512px.png'
+          type: image/png
+          sizes: 512x512
+
+        - src: '/favicons/favicon.svg'
+          sizes: any
+
+
+    display: "minimal-ui"
+
+    # Look these up in stylesheets,
+    # e.g. _variables.scss
+    background_color: "#ffffff"
+    theme_color: "#ecebea"
+
+
+    shortcuts: []
+    # shortcuts:
+    #    - name:        "Contakt us"
+    #      short_name:  "Contakt"
+    #      description: "Contakt page description"
+    #      url: "/contakt"
+    #      icons:
+    #        - src: '/assets/favicon-96px.png'
+    #          sizes: "96x96"
+

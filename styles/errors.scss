@@ -1,0 +1,57 @@
+// styles.scss
+
+@use "sass:color";
+@use "variables" as *;
+@import "root";
+
+// @import "bootstrap";
+@import "tomkyle";
+
+
+// --------------------------------------------------------------------
+// Make error pages a bit distinguishable, background-wise
+// --------------------------------------------------------------------
+
+:root {
+  --app-bg-color: #{color.adjust($app-white, $lightness: -10%)};
+  --app-font-weight-bold: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-bg-color: #{color.adjust($app-black, $lightness: 10%)};
+    --app-font-weight-bold: 650;
+  }
+}
+
+
+// --------------------------------------------------------------------
+// Style error page
+// --------------------------------------------------------------------
+
+body {
+    max-width       : 35em;
+    padding         : 2rem clamp(3rem, 5%, 6rem);
+
+    min-height      : 100vh;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : center;
+
+}
+
+.alert {
+    font-size:     var(--app-font-size-lg);
+    font-weight:   var(--app-font-weight-bold);
+    margin-bottom: 4rem;
+    line-height:   1;
+}
+
+.statuscode {
+    font-size:     var(--app-font-size-xxxl);
+    display: block;
+}
+
+.contact:empty {
+    display: none;
+}
