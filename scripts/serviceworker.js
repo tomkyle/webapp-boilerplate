@@ -1,5 +1,5 @@
-// 'buildId' value will be changed by Gulp's 'cacheBustTask'.
-var buildId=0;
+// 'buildId' value will be changed in THIS file by Gulp's 'buildIdTask'.
+var buildId=1671099292562;
 
 // Customize this with a different URL if needed.
 // (Also see route defintion in configs/routes.dist.yaml)
@@ -103,7 +103,8 @@ const cacheFirstStrategy = new workboxStrategies.CacheFirst({
 //
 // Network First:
 //
-// Cache page navigations (html) if result is 200 OK.
+// Do cache page navigations (html) if result is 200 OK.
+//
 const networkFirstStrategy = new workboxStrategies.NetworkFirst({
     ignoreVary: true,
     plugins: [ cacheableResponsePlugin ],
@@ -113,7 +114,8 @@ const networkFirstStrategy = new workboxStrategies.NetworkFirst({
 //
 // Stale While Revalidate:
 //
-// Cache CSS, JS, and Web Worker requests if result is 200 OK.
+// Do cache CSS, JS, and Web Worker requests if result is 200 OK.
+//
 const staleWhileRevalidateStrategy = new workboxStrategies.StaleWhileRevalidate({
     ignoreVary: true,
     plugins: [ cacheableResponsePlugin ],
@@ -128,32 +130,20 @@ const staleWhileRevalidateStrategy = new workboxStrategies.StaleWhileRevalidate(
 import * as workboxRouting from 'workbox-routing';
 
 workboxRouting.registerRoute(
-    ({ request }) =>
-    request.mode === 'navigate' ||
-    request.mode === 'document',
-    // cacheFirstStrategy
+    ({ request }) => [ 'navigate', 'document'].includes(request.mode),
     networkFirstStrategy
 );
 
-
-
 workboxRouting.registerRoute(
-    ({ request }) =>
-    request.destination === 'style' ||
-    request.destination === 'script' ||
-    request.destination === 'worker',
-
+    ({ request }) => [ 'style', 'script', 'worker'].includes(request.destination),
     staleWhileRevalidateStrategy
 );
 
-
-
 workboxRouting.registerRoute(
-    ({ request }) =>
-    request.destination === 'image' ||
-    request.destination === 'font',
+    ({ request }) => [ 'image', 'font'].includes(request.destination),
     cacheFirstStrategy
 );
+
 
 
 // ---------------------------------------
