@@ -16,7 +16,6 @@
     "exports-loader": "^4.0",
     "gulp": "^4.0",
     "gulp-autoprefixer": "^8.0",
-    "gulp-clean": "^0.4.0",
     "gulp-jshint": "^2.1",
     "gulp-postcss": "^9.0",
     "gulp-replace": "^1.1.3",

@@ -36,8 +36,7 @@ var webpack         = require ("webpack-stream"),
 
 // Project plugins
 var sourcemaps   = require ('gulp-sourcemaps'),
-    replace      = require('gulp-replace'),
-    clean        = require('gulp-clean');
+    replace      = require('gulp-replace');
 
 // Plugins for styles
 var autoprefixer = require ("autoprefixer"),
@@ -64,10 +63,6 @@ var buildIdTask = () => {
     )
     .pipe(dest( './' ));
 };
-
-
-
-var cleanTask = () => src([ASSETS_DIST, ASSETS_DIST], {read: false, allowEmpty: true}).pipe(clean());
 
 
 
@@ -122,7 +117,6 @@ var watchTask = (done) => {
 // --------------------------
 
 exports.default = series(
-    cleanTask,
     buildIdTask,
     parallel(
         sassTask,
