@@ -12,15 +12,12 @@ var settings = {
 
 // File-system and entry/main files
 var GLOB_JS        = ["scripts/**/*.js"],
-    GLOB_SASS      = "styles/**/*.scss";
-
-var DIST_JS        = 'public/assets',
-    DIST_CSS       = 'public/assets',
-    DIST_HTML      = 'templates';
+    GLOB_SASS      = ["styles/**/*.scss"],
+    ASSETS_DIST    = 'public/assets';
 
 var MAIN_SASS      = [ 'styles/styles.scss', 'styles/errors.scss' ],
     MAIN_JS        = [ "scripts/index.js" ],
-    MAIN_CACHEBUST = [ "public/assets/serviceworker.mjs"];
+    MAIN_SW        = [ "scripts/serviceworker.js"];
 
 
 
@@ -57,43 +54,35 @@ var jshint       = require ("gulp-jshint"),
 
 
 
-var cacheBustTask = function() {
-  var cbString = new Date().getTime();
-  console.log(`Cache bust string is '${cbString}'`);
-  return src( MAIN_CACHEBUST, {base: './'} )
+var buildIdTask = () => {
+  var cbField = 'buildId',
+      cbString = new Date().getTime();
+  console.log(`${MAIN_SW}: update revision ID '${cbField}=${cbString}'`);
+  return src( MAIN_SW, {base: './'} )
     .pipe(
-      replace(/buildId\s*=\s*\d+/g, function() {
-        return "buildId=" + cbString;
-      })
+      replace(/buildId\s*=\s*\d+/g, () => `${cbField}=${cbString}`)
     )
-    .pipe(dest('./'));
+    .pipe(dest( './' ));
 };
 
 
 
-
-var cleanTask = function() {
-  return src([DIST_JS, DIST_CSS], {read: false, allowEmpty: true})
-        .pipe(clean());
-};
+var cleanTask = () => src([ASSETS_DIST, ASSETS_DIST], {read: false, allowEmpty: true}).pipe(clean());
 
 
 
-
-
-var javascriptTask = function() {
-  return src( MAIN_JS )
+var javascriptTask = () =>
+    src( MAIN_JS )
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(webpack(require("./webpack.config.js"), webpackCompiler))
-    .pipe(dest( DIST_JS ));
-};
+    .pipe(dest( ASSETS_DIST ));
 
 
 
-var sassTask = function( done ) {
+var sassTask = ( done ) =>
+    isProduction
 
-    return isProduction
     // Without Source maps
     ? src( MAIN_SASS )
       .pipe( sass())
@@ -101,7 +90,7 @@ var sassTask = function( done ) {
          autoprefixer(),
          cssnano()
       ]))
-      .pipe( dest( DIST_CSS ))
+      .pipe( dest( ASSETS_DIST ))
 
     // With Source maps
     : src( MAIN_SASS )
@@ -112,15 +101,15 @@ var sassTask = function( done ) {
          cssnano()
       ]))
       .pipe(sourcemaps.write())
-      .pipe( dest( DIST_CSS ));
-};
+      .pipe( dest( ASSETS_DIST ));
 
 
 
 
-var watchTask = function(done) {
-    watch( GLOB_JS, series(javascriptTask, cacheBustTask));
-    watch( GLOB_SASS, series(sassTask, cacheBustTask));
+
+var watchTask = (done) => {
+    watch( GLOB_JS, series(buildIdTask, javascriptTask ));
+    watch( GLOB_SASS, series(buildIdTask, sassTask ));
     done();
 }
 
@@ -134,11 +123,11 @@ var watchTask = function(done) {
 
 exports.default = series(
     cleanTask,
+    buildIdTask,
     parallel(
         sassTask,
         javascriptTask
-    ),
-    cacheBustTask
+    )
 );
 
 exports.watch = series(
@@ -147,11 +136,11 @@ exports.watch = series(
 
 
 exports.js = series(
-    javascriptTask,
-    cacheBustTask
+    buildIdTask,
+    javascriptTask
 );
 
 exports.css = series(
-    sassTask,
-    cacheBustTask
+    buildIdTask,
+    sassTask
 );
