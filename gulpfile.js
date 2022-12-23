@@ -53,13 +53,19 @@ var jshint       = require ("gulp-jshint"),
 
 
 
-var buildIdTask = () => {
+var buildIdTask = (done) => {
   var cbField = 'buildId',
-      cbString = new Date().getTime();
-  console.log(`${MAIN_SW}: update revision ID '${cbField}=${cbString}'`);
+      cbString = new Date().getTime(),
+      buildModeField = "buildMode";
+      buildModeValue = isProduction ? "production" : "development";
+
+  console.log(`${MAIN_SW}: update revision ID '${cbField}=${cbString}' ${buildModeValue}`);
   return src( MAIN_SW, {base: './'} )
     .pipe(
       replace(/buildId\s*=\s*\d+/g, () => `${cbField}=${cbString}`)
+    )
+    .pipe(
+      replace(/buildMode\s*=\s*[\"\'\w]+/g, () => `${buildModeField}="${buildModeValue}"`)
     )
     .pipe(dest( './' ));
 };

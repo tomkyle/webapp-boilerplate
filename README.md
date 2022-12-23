@@ -147,13 +147,21 @@ $ npx gulp watch
 $ NODE_ENV=production npx gulp watch
 ```
 
-There is also a *npm* script alias which triggers a production build:
+### Development builds
+
+```bash
+$ npm run dev
+# Alias for
+$ npx gulp && npx workbox-cli injectManifest
+```
+### Production builds
 
 ```bash
 $ npm run build
 # Alias for
-$ NODE_ENV=production npx gulp
+$ NODE_ENV=production npx gulp && NODE_ENV=production npx workbox-cli injectManifest
 ```
+
 
 ### Building Favicons
 
