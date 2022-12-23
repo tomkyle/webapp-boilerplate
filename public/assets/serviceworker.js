@@ -30,7 +30,7 @@ workbox.core.setCacheNameDetails({
 // import { ExpirationPlugin } from 'workbox-expiration';
 
 // During the service worker's install event.
-workbox.precaching.precacheAndRoute(self.__WB_MANIFEST, {ignoreVary: true});
+workbox.precaching.precacheAndRoute([{"revision":"687c8582a87d75e4fdb8344d8a8f509c","url":"errors.css"},{"revision":"68563b73b03278c8a3d585b2cd05f576","url":"index.mjs"},{"revision":"bda838ef090bf63a721b6fb08cf5e49c","url":"pwa-clearcaches.mjs"},{"revision":"4423cce85e9987030dd7a195a677366c","url":"styles.css"},{"revision":"9c805e3d349e4c1a6d3be8269de0c687","url":"toggle-theme.mjs"},{"revision":"62e4a48f482ac2414cd1daca0828a293","url":"workbox-window.mjs"},{"revision":"9cf14f0d6ce9b6b8eb74b5734ef69eb9","url":"../favicons/favicon-180px.png"},{"revision":"ee81cb391ff413f99051d21230461449","url":"../favicons/favicon-192px.png"},{"revision":"2574cbfe984cae19145d2ce3010dd2f0","url":"../favicons/favicon-32px.png"},{"revision":"98480fc854d1c9694542cff0eda82e67","url":"../favicons/favicon-48px.png"},{"revision":"17077a7329bb9668ba0bdad947f860de","url":"../favicons/favicon-512px.png"},{"revision":"4c2af7f96afc26ee6487b7df1fd540dc","url":"../favicons/favicon-64px.png"},{"revision":"2f9d1c7188435c9b6e783196ee600b15","url":"../favicons/favicon-96px.png"},{"revision":"dd3619e605597c98c25c34a9be1467f1","url":"../favicons/favicon.svg"},{"revision":"hallo","url":"/manifest.webmanifest"},{"revision":"hallo","url":"/favicon.ico"}], {ignoreVary: true});
 
 // Enable navigation preload.
 workbox.navigationPreload.enable();

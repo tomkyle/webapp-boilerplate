@@ -22,7 +22,7 @@ const config = {
 
     entry: {
         "index" : path.resolve(__dirname, 'scripts/index'),
-        "serviceworker" : path.resolve(__dirname, 'scripts/serviceworker'),
+        // "serviceworker" : path.resolve(__dirname, 'scripts/serviceworker'),
     },
 
     output: {
@@ -35,6 +35,7 @@ const config = {
 
 
     optimization: {
+        chunkIds: 'named',
         minimize: true,
         minimizer: [new TerserPlugin({
             terserOptions: {
@@ -60,10 +61,6 @@ const config = {
                 use: [ 'style-loader', 'css-loader', 'sass-loader'],
             },
             {
-                test: /\.css$/i,
-                use: [ 'style-loader', 'css-loader' ]
-            },
-            {
                 test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
                 // More information here https://webpack.js.org/guides/asset-modules/
                 type: 'asset/resource'
@@ -76,6 +73,7 @@ const config = {
         extensions: ['.js', '.jsx', '.mjs'],
         modules: [
           path.resolve(__dirname, 'scripts'),
+          path.resolve(__dirname, 'styles'),
           path.resolve(__dirname, 'node_modules')
         ]
     }
