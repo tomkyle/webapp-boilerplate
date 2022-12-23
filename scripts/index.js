@@ -13,6 +13,7 @@ import(/* webpackChunkName: 'pwa-clearcaches' */ "pwa-clearcaches")
 });
 
 
+
 import(/* webpackChunkName: 'toggle-theme' */ "toggle-theme")
 .then(module => module.default)
 .then(ThemeToggler => {
@@ -31,9 +32,9 @@ import(/* webpackChunkName: 'workbox-window' */ "workbox-window")
 .then(module => module.Workbox)
 .then(Workbox => {
     if ('serviceWorker' in navigator) {
-        const wb = new Workbox('/assets/serviceworker.mjs', {
+        const wb = new Workbox('/assets/serviceworker.js', {
             scope: "/",
-            type: "module"
+            // type: "module"
         });
 
         // Handling service worker updates with immediacy
