@@ -180,21 +180,21 @@
         },
         {
             "name": "germania-kg/configreader",
-            "version": "3.1.11",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GermaniaKG/ConfigReader.git",
-                "reference": "38c0094cd93a31fcd06fafd21e4eff8d86b7da19"
+                "reference": "fbcfc46d37dd18df4c7dafb06788a14ea352867d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GermaniaKG/ConfigReader/zipball/38c0094cd93a31fcd06fafd21e4eff8d86b7da19",
-                "reference": "38c0094cd93a31fcd06fafd21e4eff8d86b7da19",
+                "url": "https://api.github.com/repos/GermaniaKG/ConfigReader/zipball/fbcfc46d37dd18df4c7dafb06788a14ea352867d",
+                "reference": "fbcfc46d37dd18df4c7dafb06788a14ea352867d",
                 "shasum": ""
             },
             "require": {
                 "germania-kg/cachecallable": "^2.0",
-                "php": "^7.3|^8.0",
+                "php": "^7.4|^8.0",
                 "psr/cache": "^1.0|^2.0|^3.0",
                 "psr/log": "^1.0|^2.0|^3.0",
                 "symfony/yaml": "^2.0|^3.0|^4.0|^5.0|^6.0"
@@ -203,6 +203,7 @@
                 "monolog/monolog": "^2.1|^3.0",
                 "php-coveralls/php-coveralls": "^2.0",
                 "phpspec/prophecy-phpunit": "^2.0",
+                "phpstan/phpstan": "^1.9",
                 "phpunit/phpunit": "^8.0|^9.0"
             },
             "suggest": {
@@ -228,9 +229,9 @@
             "description": "Merge default and custom configuration files with Symfony YAML. Supports CacheItemPools.",
             "support": {
                 "issues": "https://github.com/GermaniaKG/ConfigReader/issues",
-                "source": "https://github.com/GermaniaKG/ConfigReader/tree/3.1.11"
+                "source": "https://github.com/GermaniaKG/ConfigReader/tree/3.2.0"
             },
-            "time": "2022-12-12T13:48:52+00:00"
+            "time": "2023-01-03T13:54:47+00:00"
         },
         {
             "name": "graham-campbell/result-type",
