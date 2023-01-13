@@ -33,12 +33,11 @@ trait LoggerTrait
 
     public static function getLogger(): LoggerInterface
     {
-        if (static::$logger instanceof LoggerInterface) {
-            return static::$logger;
+        if (!static::$logger instanceof LoggerInterface) {
+            $logger = static::createMonologLogger();
+            static::setLogger($logger);
         }
 
-        $logger = static::createMonologLogger();
-        static::setLogger($logger);
         return static::$logger;
     }
 
@@ -66,7 +65,7 @@ trait LoggerTrait
 
 
 
-    protected static function createMonologLogger(): LoggerInterface
+    protected static function createMonologLogger(): Logger
     {
         $stream = $GLOBALS['LOG_STREAM'] ?? "php://stdout";
         $loglevel = static::getLogLevel();
