@@ -34,7 +34,7 @@
         "monolog/monolog": "^2.0|^3.2",
         "slim/slim": "^4.10",
         "slim/psr7": "^1.5",
-        "php-di/php-di": "^6.4",
+        "php-di/php-di": "^7.0",
         "twig/twig": "^3.4.2",
 
         "symfony/console": "^6.1.4",
