@@ -34,7 +34,7 @@
         "monolog/monolog": "^2.0|^3.2",
         "slim/slim": "^4.10",
         "slim/psr7": "^1.5",
-        "php-di/php-di": "^6.4",
+        "php-di/php-di": "^7.0",
         "twig/twig": "^3.4.2",
 
         "symfony/console": "^6.1.4",
@@ -48,7 +48,7 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^9.5.24",
+        "phpunit/phpunit": "^9.5|^10.0",
         "phpspec/prophecy-phpunit": "^2.0.1",
         "php-coveralls/php-coveralls": "^2.5.2",
         "phpstan/phpstan": "^1.8.3",
