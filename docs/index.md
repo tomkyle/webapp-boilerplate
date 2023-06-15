@@ -2,6 +2,14 @@
 title: Running tests
 ---
 
+
+
+> **Heads up!**
+>
+> I am new to this GutHub pages thingy and still learning. For now, do not take this docs too seriously, rather stick with [README.md](../README.md)
+
+---
+
 # Running tests
 
 This packages has predefined test setups for code quality, code readability and style, unit/integration tests, and frontend performance. Check them out at the **scripts** sections of **[composer.json](./composer.json)** and **[package.json](./package.json)**. 
