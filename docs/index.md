@@ -6,7 +6,6 @@ title: Running tests
 
 This packages has predefined test setups for code quality, code readability and style, unit/integration tests, and frontend performance. Check them out at the **scripts** sections of **[composer.json](./composer.json)** and **[package.json](./package.json)**. 
 
-[TOC]
 
 ## PhpStan
 
