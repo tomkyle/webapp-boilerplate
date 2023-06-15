@@ -2,6 +2,7 @@
 title: Running tests
 ---
 
+[server-config](server-config.md)
 
 
 > **Heads up!**
