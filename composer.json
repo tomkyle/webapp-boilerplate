@@ -48,7 +48,7 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^9.5|^10.0",
+        "phpunit/phpunit": "^9.5",
         "phpspec/prophecy-phpunit": "^2.0.1",
         "php-coveralls/php-coveralls": "^2.5.2",
         "phpstan/phpstan": "^1.10",
@@ -92,10 +92,12 @@
 
         "test": [
             "@test:unit",
-            "@test:integration"
+            "@test:integration",
+            "@test:functional"
         ],
         "test:unit": ["@phpunit --testsuite unit"],
         "test:integration": ["@phpunit --testsuite integration"],
+        "test:functional": ["@phpunit --testsuite functional"],
 
         "test:performance": [
             "@build",
