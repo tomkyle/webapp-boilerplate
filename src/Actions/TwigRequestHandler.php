@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteContext;
+use Slim\Interfaces\RouteInterface;
 use Twig;
 
 class TwigRequestHandler implements RequestHandlerInterface
@@ -57,6 +58,9 @@ class TwigRequestHandler implements RequestHandlerInterface
     {
         // Evaluate route
         $route = RouteContext::fromRequest($request)->getRoute();
+        if (!$route instanceof RouteInterface) {
+            throw new \UnexpectedValueException("getRoute did not return RouteInterface");
+        }
         $route_arguments = $route->getArguments();
 
         // Build template context array

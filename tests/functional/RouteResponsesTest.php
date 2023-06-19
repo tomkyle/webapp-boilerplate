@@ -15,6 +15,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Container\ContainerInterface;
+use UnexpectedValueException;
 
 use function App\dotenv;
 
@@ -69,6 +71,10 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
 
         $app = static::createApp() ;
         $container = $app->getContainer();
+        if (!$container instanceOf ContainerInterface) {
+            throw new UnexpectedValueException("Slim app’s getContainer method did not return ContainerInterface");
+        }
+
         $routes = $container->get('App.Routes');
 
         static::$app_routes = (array) $routes;
