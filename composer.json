@@ -56,7 +56,8 @@
         "nyholm/psr7": "^1.5.1",
         "guzzlehttp/guzzle": "^7.0",
         "bramus/monolog-colored-line-formatter": "^3.0.6",
-        "roave/security-advisories": "dev-latest"
+        "roave/security-advisories": "dev-latest",
+        "codeception/codeception": "^5.0"
     },
 
     "scripts": {
