@@ -41,6 +41,7 @@ $ composer test
 # which includes these two:
 $ composer test:unit
 $ composer test:integration
+$ composer test:functional
 ```
 
 ## Frontend performance
