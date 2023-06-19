@@ -17,6 +17,53 @@ class CoreComponentsTest extends \PHPUnit\Framework\TestCase
     use ProphecyTrait;
 
 
+    /**
+     * @dataProvider provideContainerDefinitionFiles
+     */
+    public function testContainerDefinitions( string $inc_file ) : void
+    {
+        $sut = require __DIR__ . '/../../core/' . $inc_file;
+
+        $this->assertIsArray($sut);
+
+    }
+
+    /**
+     * @return array<mixed[]>
+     */
+    public static function provideContainerDefinitionFiles(): array
+    {
+        $inc_files = array(
+            'actions.php',
+            'app.php',
+            'configs.php',
+            'console.php',
+            'guzzle.php',
+            'middlewares.php',
+            'monolog.php',
+            'psr.php',
+            'slim.php',
+            'templating.php',
+        );
+        return array_combine($inc_files, array_map(function ($c) {
+            return [ $c ];
+        }, $inc_files));
+    }
+
+
+    /**
+     * @depends testContainerDefinitions
+     */
+    public function testBuildingDependencyInjectionContainer(): ContainerInterface
+    {
+        $sut = require __DIR__ . '/../../core/container.php';
+
+        $this->assertInstanceOf(ContainerInterface::class, $sut);
+
+        return $sut;
+    }
+
+
 
     public function testBuildingDotenvInstance(): \Dotenv\Dotenv
     {
@@ -27,11 +74,15 @@ class CoreComponentsTest extends \PHPUnit\Framework\TestCase
         return $sut;
     }
 
-    public function testBuildingDependencyInjectionContainer(): ContainerInterface
-    {
-        $sut = require __DIR__ . '/../../core/container.php';
 
-        $this->assertInstanceOf(ContainerInterface::class, $sut);
+    /**
+     * @depends testBuildingDependencyInjectionContainer
+     */
+    public function createSlimApplication(ContainerInterface $dic): \Slim\App
+    {
+        $sut = $dic->get(\Slim\App::class);
+
+        $this->assertInstanceOf(\Slim\App::class, $sut);
 
         return $sut;
     }

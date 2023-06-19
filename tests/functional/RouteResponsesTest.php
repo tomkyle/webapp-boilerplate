@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Integration;
+namespace tests\Functional;
 
 use tests\LoggerTrait;
 use Slim\Psr7\Factory\ServerRequestFactory;
