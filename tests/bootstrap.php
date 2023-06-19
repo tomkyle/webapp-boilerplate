@@ -7,10 +7,9 @@
  * file that was distributed with this source code.
  */
 
-# use Dotenv\Dotenv;
-
 $root_path = dirname(__DIR__);
 $autoloader = $root_path . '/vendor/autoload.php';
 if (!is_readable($autoloader)) {
-    die(sprintf("\nMissing Composer's Autoloader '%s'; run 'composer install' first.\n\n", $autoloader));
+    die(sprintf("\nMissing Composer's Autoloader '%s'; Install Composer dependencies first.\n\n", $autoloader));
 }
+
