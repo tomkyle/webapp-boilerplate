@@ -7,12 +7,13 @@
 # Running tests
 
 
-This packages has predefined test setups for code quality, code readability and style, unit/integration tests, and frontend performance. Check them out at the **scripts** sections of **[composer.json](./composer.json)** and **[package.json](./package.json)**. 
+This packages has predefined test setups for code quality, code readability and style, unit/integration/functional tests as well as acceptance tests, and frontend performance. Check them out at the **scripts** sections of **[composer.json](../composer.json)** and **[package.json](../package.json)**. 
 
+---
 
 ## PhpStan
 
-Default configuration is **[phpstan.neon.dist](./phpstan.neon.dist).** Create a custom **phpstan.neon** to apply your own settings. Also visit [phpstan.org](https://phpstan.org/) · [GitHub](https://github.com/phpstan/phpstan) · [Packagist](https://packagist.org/packages/phpstan/phpstan)
+Default configuration is **[phpstan.neon.dist](../phpstan.neon.dist).** Create a custom **phpstan.neon** to apply your own settings. Also visit [phpstan.org](https://phpstan.org/) · [GitHub](https://github.com/phpstan/phpstan) · [Packagist](https://packagist.org/packages/phpstan/phpstan)
 
 ```bash
 $ composer phpstan
@@ -21,19 +22,24 @@ $ composer phpstan
 $ phpstan analyse
 ```
 
+---
+
 ## PHP-CS
 
-Default configuration is **[.php-cs-fixer.dist.php](./.php-cs-fixer.dist.php).** Create a custom **.php-cs-fixer.php** to apply your own settings. Also visit [cs.symfony.com](https://cs.symfony.com/) ·  [GitHub](https://github.com/FriendsOfPHP/PHP-CS-Fixer) · [Packagist](https://packagist.org/packages/friendsofphp/php-cs-fixer)
+Default configuration is **[.php-cs-fixer.dist.php](../.php-cs-fixer.dist.php).** Create a custom **.php-cs-fixer.php** to apply your own settings. Also visit [cs.symfony.com](https://cs.symfony.com/) ·  [GitHub](https://github.com/FriendsOfPHP/PHP-CS-Fixer) · [Packagist](https://packagist.org/packages/friendsofphp/php-cs-fixer)
 
 ```bash
 $ composer phpcs
 $ composer phpcs:apply
 ```
 
-## PHPUnit and integration tests
+---
 
-Default configuration is **[phpunit.xml.dist](./phpunit.xml.dist).** Create a custom **phpunit.xml** to apply your own settings. 
+## PHPUnit
+
+Default configuration is **[phpunit.xml.dist](../phpunit.xml.dist).** Create a custom **phpunit.xml** to apply your own settings. 
 Also visit [phpunit.readthedocs.io](https://phpunit.readthedocs.io/) · [Packagist](https://packagist.org/packages/phpunit/phpunit)
+
 
 ```bash
 $ composer test
@@ -44,15 +50,32 @@ $ composer test:integration
 $ composer test:functional
 ```
 
+---
+
+## Codeception Acceptance
+
+Default configurazion is **[codeception.yml](../codeception.yml).** These Codeception tests arequire a running [Docker Container](docker.md) so that your project is available under [https://localhost](https://localhost):
+
+```bash
+$ composer test:acceptance
+
+# which includes:
+$ composer codecept
+```
+
+---
+
 ## Frontend performance
 
-Default configuration is **[lighthouserc.js](./lighthouserc.js).** Before running [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) on the Docker machine, a production build is triggered. Test results will go locally in **./tests/lhci** directory. Visit [lhci docs](https://www.npmjs.com/package/@lhci/cli) · [Google's Lighthouse](https://developers.google.com/web/tools/lighthouse/)
+Default configuration is **[lighthouserc.js](../lighthouserc.js).** Before running [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) on the Docker machine, a production build is triggered. Test results will go locally in **./tests/lhci** directory. Visit [lhci docs](https://www.npmjs.com/package/@lhci/cli) · [Google's Lighthouse](https://developers.google.com/web/tools/lighthouse/)
 
 ```bash
 $ npm run lighthouse
 # Alias for
 $ npx lhci autorun lighthouserc.js
 ```
+
+---
 
 ## Postman API testing
 

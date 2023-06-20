@@ -66,6 +66,7 @@ var/twig/*
 # An empty .keep file makes sure an "empty" directory is part of the repo.
 ~*
 !.keep
+!.gitkeep
 .env
 phpstan.neon
 .php-cs-fixer.cache

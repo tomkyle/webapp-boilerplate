@@ -1,33 +1,29 @@
 {
     "name": "tomkyle/webapp-boilerplate",
     "description": "Boilerplate for PHP web app with Slim Framework, Gulp, Webpack, PHP-DI",
-
-    "type":        "project",
-    "homepage":    "https://github.com/tomkyle/webapp-boilerplate",
-
-    "license":     "MIT",
-
-    "authors": [{
-        "name": "Carsten Witt",
-        "email": "tomkyle@posteo.de",
-        "role": "Developer"
-    }],
-
+    "type": "project",
+    "homepage": "https://github.com/tomkyle/webapp-boilerplate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Carsten Witt",
+            "email": "tomkyle@posteo.de",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "src"
         },
         "files": [
-        	"src/functions.php"
+            "src/functions.php"
         ]
     },
-
     "autoload-dev": {
         "psr-4": {
             "tests\\": "tests"
         }
     },
-
     "require": {
         "php": "^8.1",
         "vlucas/phpdotenv": "^5.4.1",
@@ -36,17 +32,13 @@
         "slim/psr7": "^1.5",
         "php-di/php-di": "^7.0",
         "twig/twig": "^3.4.2",
-
         "symfony/console": "^6.1.4",
         "symfony/process": "^6.1.3",
-
         "germania-kg/configreader": "^2.1|^3.1.7",
         "germania-kg/clearcache-command": "^1.0.9",
         "middlewares/csp": "^3.1.1",
         "mnapoli/silly": "^1.8"
-
     },
-
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "phpspec/prophecy-phpunit": "^2.0.1",
@@ -57,9 +49,9 @@
         "guzzlehttp/guzzle": "^7.0",
         "bramus/monolog-colored-line-formatter": "^3.0.6",
         "roave/security-advisories": "dev-latest",
-        "codeception/codeception": "^5.0"
+        "codeception/codeception": "^5.0",
+        "codeception/module-webdriver": "*"
     },
-
     "scripts": {
         "post-update-cmd": [
             "php bin/post-install.php dotenv --yes",
@@ -70,40 +62,49 @@
             "php bin/post-install.php dotenv --yes",
             "php bin/post-install.php htaccess --yes"
         ],
+
         "htaccess": [
             "@htaccess:build"
         ],
         "htaccess:build": "~/server-configs-apache/bin/build.sh public/htaccess.dist ./resources/server-configs/htaccess.conf",
 
         "build": "npm run build",
+
         "lighthouse": "npm run lighthouse",
 
         "phpunit": "phpunit --testdox",
 
         "phpstan": "phpstan analyse",
 
-        "phpcs": [
-        	"@phpcs:dry"
-        ],
+        "phpcs": [ "@phpcs:dry" ],
         "phpcs:dry": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --verbose --diff --dry-run",
         "phpcs:apply": [
             "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --verbose --diff",
             "@test:unit"
         ],
 
+        "codecept": "codecept run",
+
         "test": [
             "@test:unit",
             "@test:integration",
             "@test:functional"
         ],
-        "test:unit": ["@phpunit --testsuite unit"],
-        "test:integration": ["@phpunit --testsuite integration"],
-        "test:functional": ["@phpunit --testsuite functional"],
-
+        "test:unit": [
+            "@phpunit --testsuite unit"
+        ],
+        "test:integration": [
+            "@phpunit --testsuite integration"
+        ],
+        "test:functional": [
+            "@phpunit --testsuite functional"
+        ],
+        "test:acceptance": [
+            "@codecept"
+        ],
         "test:performance": [
             "@build",
             "@lighthouse"
         ]
-
     }
 }
