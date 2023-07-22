@@ -1,7 +1,7 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
 
 // 'buildId' and 'buildMode' values will be changed in THIS file by Gulp's 'buildIdTask'.
-var buildId=1686550453802,
+var buildId=1690013451675,
     buildMode="production";
 
 // This must come before any other workbox.* methods.
