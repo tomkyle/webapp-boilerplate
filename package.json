@@ -50,7 +50,9 @@
   "scripts": {
     "dev": "npx gulp && npx workbox-cli injectManifest",
     "build": "NODE_ENV=production npx gulp && NODE_ENV=production npx workbox-cli injectManifest",
-    "lighthouse": "npx lhci autorun --config lighthouserc.js",
+
+    "lighthouse": "npm-run-all -s build lighthouse:*",
+    "lighthouse:run": "npx lhci autorun --config lighthouserc.js",
 
     "watch": "npm-run-all -p watch:*",
 
