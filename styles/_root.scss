@@ -53,9 +53,6 @@
 }
 
 
-
-
-
 :root {
   color-scheme: light dark; /* both supported */
 
@@ -77,6 +74,9 @@
   --app-font-weight-body:       #{$app-font-weight-body-light};
   --app-font-weight-heading:    #{$app-font-weight-heading-light};
   --app-font-weight-bold:       #{$app-font-weight-bold-light};
+
+  // Layout
+  --app_vspace:                 #{$app_vspace};
 }
 
 
