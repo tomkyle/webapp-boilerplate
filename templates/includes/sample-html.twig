@@ -4,26 +4,26 @@
 
 
 <h1>Heading 1</h1>
-<p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+<p class="lead">Lead is a lead text paragraph. Tradiotionally, it is displayed visually larger.</p>
+
+
 <h2>Heading 2</h2>
 <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
 <h3>Heading 3</h3>
 <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
 <h4>Heading 4</h4>
 <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
 <h5>Heading 5</h5>
 <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
 <h6>Heading 6</h6>
 <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 
-<hr>
-<h6>Lead text</h6>
-<p class="lead">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. </p>
 
-
-<hr>
-<br>
-
+<h2>Text styles</h2>
 <p>
 	Lorem <mark>ipsum</mark> dolor sit amet <strong>consectetur</strong> adipisicing elit. Aut <i>harum
 		molestias</i> labore amet
@@ -38,6 +38,9 @@
 	minima vel.
 </p>
 
+<h2>Lists</h2>
+
+<h3>Unordered Lists</h3>
 <ul>
 	<li>List item</li>
 	<li>List item</li>
@@ -45,6 +48,8 @@
 	<li>List item</li>
 </ul>
 
+
+<h3>Ordered Lists</h3>
 <ol>
 	<li>Step 1</li>
 	<li>Step 2</li>
@@ -52,6 +57,8 @@
 	<li>PROFIT!!!</li>
 </ol>
 
+
+<h3>Definition Lists</h3>
 <dl>
 	<dt>Web</dt>
 	<dd>The part of the Internet that contains websites and web pages</dd>
@@ -61,10 +68,17 @@
 	<dd>A technology to make HTML look better</dd>
 </dl>
 
+
+<h2>Quotes</h2>
+
 <blockquote cite="https://en.wikiquote.org/wiki/Edward_Snowden">
 	If you think privacy is unimportant for you because you have nothing to hide, you might as well say free speech
 	is unimportant for you because you have nothing useful to say.<br><br>– Edward Snowden
 </blockquote>
+
+
+
+<h2>Code blocks</h2>
 
 <pre>
 &#x3C;!DOCTYPE html&#x3E;
@@ -77,22 +91,23 @@
 &#x3C;/body&#x3E;
 &#x3C;/html&#x3E;</pre>
 
-<br>
-<hr>
-<br>
+
+
+
+<h2>Tables</h2>
 
 <table>
 	<caption>Ho-kago Tea Time</caption>
 	<thead>
 		<tr>
-			<th>Name</th>
-			<th>Instrument</th>
+			<th scope="col">Name</th>
+			<th scope="col">Instrument</th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<th>Name</th>
-			<th>Instrument</th>
+			<th scope="col">Name</th>
+			<th scope="col">Instrument</th>
 		</tr>
 	</tfoot>
 	<tbody>
@@ -119,52 +134,54 @@
 	</tbody>
 </table>
 
-<br>
-<hr>
-<br>
+
+
+
+
+<h2>Forms</h2>
 
 <form>
 	<p><em>This is not a real form and does not submit or save any information.</em></p>
 	<p>
-		<label>First name</label><br>
-		<input type="text" name="first_name" autocomplete="given-name">
+		<label for="first_name">First name</label><br>
+		<input type="text" name="first_name" id="first_name" autocomplete="given-name">
 	</p>
 	<p>
-		<label>Last name</label><br>
-		<input type="text" name="last_name" autocomplete="family-name">
+		<label for="last_name">Last name</label><br>
+		<input type="text" name="last_name" id="last_name" autocomplete="family-name">
 	</p>
 	<p>
 		<label>Gender</label><br>
-		<label>
-			<input type="radio" name="gender" value="Male" autocomplete="off">
+		<label for="genderMale">
+			<input type="radio" name="gender" id="genderMale" value="Male" autocomplete="off">
 			Male
 		</label>
 		<br>
-		<label>
-			<input type="radio" name="gender" value="Female" autocomplete="off">
+		<label for="genderFemale">
+			<input type="radio" name="gender" id="genderFemale" value="Female" autocomplete="off">
 			Female
 		</label>
 		<br>
-		<label>
-			<input type="radio" name="gender" value="other-none-na" autocomplete="off">
+		<label for="genderOther">
+			<input type="radio" name="gender" id="genderOther" value="other-none-na" autocomplete="off">
 			Non-binary
 		</label>
 	</p>
 	<p>
-		<label>Email</label><br>
-		<input type="email" name="email" required="" autocomplete="on">
+		<label for="email">Email</label><br>
+		<input type="email" name="email" id="email" required autocomplete="on">
 	</p>
 	<p>
-		<label>Phone number</label><br>
-		<input type="tel" name="phone" autocomplete="off">
+		<label for="phone">Phone number</label><br>
+		<input type="tel" name="phone" id="phone" autocomplete="off">
 	</p>
 	<p>
-		<label>Password</label><br>
-		<input type="password" name="password" autocomplete="new-password">
+		<label for="password">Password</label><br>
+		<input type="password" name="password" id="password" autocomplete="new-password">
 	</p>
 	<p>
-		<label>Favorite Flavor</label><br>
-		<select>
+		<label for="favourite">Favorite Flavor</label><br>
+		<select name="favourite" id="favourite">
 			<option>Chocolate</option>
 			<option>Vanilla</option>
 			<option>Strawberry</option>
@@ -173,19 +190,19 @@
 		</select>
 	</p>
 	<p>
-		<label>Comments</label><br>
-		<textarea></textarea>
+		<label for="comments">Comments</label><br>
+		<textarea name="comments" id="comments"></textarea>
 	</p>
 	<p>
-		<label>
-			<input type="checkbox" value="terms" autocomplete="off">
+		<label for="agreeTerms">
+			<input type="checkbox" value="terms" name="agreeTerms" id="agreeTerms" autocomplete="off">
 			I agree to the <a>terms and conditions</a>
 		</label>
 	</p>
 	<p>
-		<button>Sign up</button>
+		<button type="submit" name="submit">Sign up</button>
 		<button type="reset">Reset form</button>
-		<button disabled="disabled">Disabled</button>
+		<button disabled="disabled" name="disabledButton">Disabled</button>
 	</p>
 </form>
 
