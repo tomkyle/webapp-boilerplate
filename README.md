@@ -1,6 +1,6 @@
 <h1 align="center">tomkyle/webapp-boilerplate</h1>
 
-This is how I would start a new PHP web application on PHP 8.1+, based on [Slim 4](https://www.slimframework.com/) , Docker, Gulp, Webpack, PhpUnit, and pretty much everything I find useful.
+This is how I would start a new PHP web application on PHP 8.3+, based on [Slim 4](https://www.slimframework.com/) , Docker, Gulp, Webpack, PhpUnit, and pretty much everything I find useful.
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 

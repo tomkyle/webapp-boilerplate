@@ -11,7 +11,7 @@
 #   docker-compose build
 #   docker-compose up
 
-FROM php:8.2-apache
+FROM php:8.4-apache
 
 ### system dependecies
 RUN apt-get update \
