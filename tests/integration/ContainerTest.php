@@ -11,6 +11,8 @@ namespace tests\Integration;
 
 use tests\LoggerTrait;
 use Psr\Container\ContainerInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 
 class ContainerTest extends \PHPUnit\Framework\TestCase
 {
@@ -25,10 +27,8 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     }
 
 
-    /**
-     * @dataProvider provideMostImportantClassNames
-     * @depends testContainerCreation
-     */
+    #[Depends('testContainerCreation')]
+    #[DataProvider('provideMostImportantClassNames')]
     public function testInstantiationOfImportantThings(string $php_class, ContainerInterface $sut): void
     {
         $result = $sut->get($php_class);
@@ -39,7 +39,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array<mixed[]>
      */
-    public function provideMostImportantClassNames(): array
+    public static function provideMostImportantClassNames(): array
     {
         $classes = array(
             \Dotenv\Dotenv::class,
@@ -55,8 +55,6 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
             \Twig\Environment::class,
             \Symfony\Component\Console\Application::class
         );
-        return array_combine($classes, array_map(function ($c) {
-            return [ $c ];
-        }, $classes));
+        return array_combine($classes, array_map(static fn($c) => [ $c ], $classes));
     }
 }
