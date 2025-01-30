@@ -12,7 +12,7 @@ namespace App;
 use App\Commands;
 use Symfony\Component\Console;
 use Psr\Container\ContainerInterface;
-use Germania\ClearCache;
+// use Germania\ClearCache;
 use Germania\UpdateApp;
 
 return array(
@@ -32,7 +32,7 @@ return array(
     Console\CommandLoader\ContainerCommandLoader::class => function ($dic): Console\CommandLoader\ContainerCommandLoader {
         return new Console\CommandLoader\ContainerCommandLoader($dic, [
             'install'       => Commands\InstallAppCommand::class,
-            'cache:clear'   => ClearCache\ClearCacheCommand::class
+            // 'cache:clear'   => ClearCache\ClearCacheCommand::class
         ]);
     },
 
@@ -46,11 +46,11 @@ return array(
     },
 
 
-    ClearCache\ClearCacheCommand::class => function (ContainerInterface $dic): ClearCache\ClearCacheCommand {
-        $directories = $dic->get('App.cacheDirectories');
-        $directories = array_filter($directories);
-        $psr_caches = array();
-
-        return new ClearCache\ClearCacheCommand($directories, $psr_caches);
-    }
+    // ClearCache\ClearCacheCommand::class => function (ContainerInterface $dic): ClearCache\ClearCacheCommand {
+    //     $directories = $dic->get('App.cacheDirectories');
+    //     $directories = array_filter($directories);
+    //     $psr_caches = array();
+//
+    //     return new ClearCache\ClearCacheCommand($directories, $psr_caches);
+    // }
 );

@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteContext;
+use Slim\Interfaces\RouteInterface;
 use Twig;
 
 class TwigRequestHandler implements RequestHandlerInterface
@@ -43,20 +44,24 @@ class TwigRequestHandler implements RequestHandlerInterface
     /**
      * @var mixed[]
      */
-    public $default_context = array();
+    public $default_context = [];
 
 
-    public function __construct(ResponseFactoryInterface $response_factory, Twig\Environment $twig)
+    public function __construct(ResponseFactoryInterface $responseFactory, Twig\Environment $twigEnvironment)
     {
-        $this->setResponseFactory($response_factory);
-        $this->setTwigEnvironment($twig);
+        $this->setResponseFactory($responseFactory);
+        $this->setTwigEnvironment($twigEnvironment);
     }
 
 
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $serverRequest): ResponseInterface
     {
         // Evaluate route
-        $route = RouteContext::fromRequest($request)->getRoute();
+        $route = RouteContext::fromRequest($serverRequest)->getRoute();
+        if (!$route instanceof RouteInterface) {
+            throw new \UnexpectedValueException("getRoute did not return RouteInterface");
+        }
+
         $route_arguments = $route->getArguments();
 
         // Build template context array
@@ -81,9 +86,9 @@ class TwigRequestHandler implements RequestHandlerInterface
         return $this;
     }
 
-    public function setTwigEnvironment(Twig\Environment $twig): self
+    public function setTwigEnvironment(Twig\Environment $twigEnvironment): self
     {
-        $this->twig = $twig;
+        $this->twig = $twigEnvironment;
         return $this;
     }
 
@@ -93,9 +98,9 @@ class TwigRequestHandler implements RequestHandlerInterface
         return $this;
     }
 
-    public function setResponseFactory(ResponseFactoryInterface $response_factory): self
+    public function setResponseFactory(ResponseFactoryInterface $responseFactory): self
     {
-        $this->response_factory = $response_factory;
+        $this->response_factory = $responseFactory;
         return $this;
     }
 

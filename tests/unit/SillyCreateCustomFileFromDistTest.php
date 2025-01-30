@@ -18,13 +18,13 @@ class SillyCreateCustomFileFromDistTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiation(): SillyCreateCustomFileFromDist
     {
-        $silly_mock = $this->prophesize(\Silly\Application::class);
-        $silly = $silly_mock->reveal();
+        $objectProphecy = $this->prophesize(\Silly\Application::class);
+        $application = $objectProphecy->reveal();
 
-        $sut = new SillyCreateCustomFileFromDist($silly, "dist", "custom");
+        $sillyCreateCustomFileFromDist = new SillyCreateCustomFileFromDist($application, "dist", "custom");
 
-        $this->assertIsCallable($sut);
+        $this->assertIsCallable($sillyCreateCustomFileFromDist);
 
-        return $sut;
+        return $sillyCreateCustomFileFromDist;
     }
 }

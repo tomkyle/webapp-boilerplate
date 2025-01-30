@@ -20,7 +20,7 @@ class JsonResponse implements RequestHandlerInterface
     /**
      * @var mixed[]
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * @var integer
@@ -47,35 +47,33 @@ class JsonResponse implements RequestHandlerInterface
     }
 
 
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $serverRequest): ResponseInterface
     {
         $response = $this->response_factory->createResponse();
-        return $this->populateResponse($request, $response);
+        return $this->populateResponse($serverRequest, $response);
     }
 
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequestInterface $serverRequest, ResponseInterface $response): ResponseInterface
     {
-        return $this->populateResponse($request, $response);
+        return $this->populateResponse($serverRequest, $response);
     }
 
 
 
-    protected function populateResponse(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    protected function populateResponse(ServerRequestInterface $serverRequest, ResponseInterface $response): ResponseInterface
     {
         $json_string = json_encode($this->data, $this->json_options | \JSON_THROW_ON_ERROR);
         $response->getBody()->write($json_string);
-
-        $response = $response->withHeader('Content-Type', $this->content_type);
-        return $response;
+        return $response->withHeader('Content-Type', $this->content_type);
     }
 
 
 
 
-    public function setResponseFactory(ResponseFactoryInterface $response_factory): self
+    public function setResponseFactory(ResponseFactoryInterface $responseFactory): self
     {
-        $this->response_factory = $response_factory;
+        $this->response_factory = $responseFactory;
         return $this;
     }
 

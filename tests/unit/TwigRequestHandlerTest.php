@@ -20,51 +20,51 @@ class TwigRequestHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiation(): TwigRequestHandler
     {
-        $response_factory_mock = $this->prophesize(ResponseFactoryInterface::class);
-        $response_factory = $response_factory_mock->reveal();
+        $objectProphecy = $this->prophesize(ResponseFactoryInterface::class);
+        $responseFactory = $objectProphecy->reveal();
 
         $twig_mock = $this->prophesize(\Twig\Environment::class);
-        $twig = $twig_mock->reveal();
+        $twigEnvironment = $twig_mock->reveal();
 
-        $sut = new TwigRequestHandler($response_factory, $twig);
+        $twigRequestHandler = new TwigRequestHandler($responseFactory, $twigEnvironment);
 
-        $this->assertInstanceOf(RequestHandlerInterface::class, $sut);
+        $this->assertInstanceOf(RequestHandlerInterface::class, $twigRequestHandler);
 
-        return $sut;
+        return $twigRequestHandler;
     }
 
 
     /**
      * @depends testInstantiation
      */
-    public function testTwigEnvironmentSetter(TwigRequestHandler $sut): void
+    public function testTwigEnvironmentSetter(TwigRequestHandler $twigRequestHandler): void
     {
-        $twig_mock = $this->prophesize(\Twig\Environment::class);
-        $twig = $twig_mock->reveal();
+        $objectProphecy = $this->prophesize(\Twig\Environment::class);
+        $twigEnvironment = $objectProphecy->reveal();
 
-        $fluid = $sut->setTwigEnvironment($twig);
-        $this->assertEquals($fluid, $sut);
+        $fluid = $twigRequestHandler->setTwigEnvironment($twigEnvironment);
+        $this->assertEquals($fluid, $twigRequestHandler);
     }
 
 
     /**
      * @depends testInstantiation
      */
-    public function testTemplateSetter(TwigRequestHandler $sut): void
+    public function testTemplateSetter(TwigRequestHandler $twigRequestHandler): void
     {
-        $fluid = $sut->setTemplate("website.tpl");
-        $this->assertEquals($fluid, $sut);
+        $fluid = $twigRequestHandler->setTemplate("website.tpl");
+        $this->assertEquals($fluid, $twigRequestHandler);
     }
 
 
     /**
      * @depends testInstantiation
      */
-    public function testContextSetter(TwigRequestHandler $sut): void
+    public function testContextSetter(TwigRequestHandler $twigRequestHandler): void
     {
-        $context = array('foo' => 'bar');
-        $fluid = $sut->setDefaultContext($context);
-        $this->assertEquals($fluid, $sut);
+        $context = ['foo' => 'bar'];
+        $fluid = $twigRequestHandler->setDefaultContext($context);
+        $this->assertEquals($fluid, $twigRequestHandler);
         $this->assertEquals($fluid->default_context, $context);
     }
 
@@ -72,12 +72,12 @@ class TwigRequestHandlerTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testInstantiation
      */
-    public function testResponseFactorySetter(TwigRequestHandler $sut): void
+    public function testResponseFactorySetter(TwigRequestHandler $twigRequestHandler): void
     {
-        $response_factory_mock = $this->prophesize(ResponseFactoryInterface::class);
-        $response_factory = $response_factory_mock->reveal();
+        $objectProphecy = $this->prophesize(ResponseFactoryInterface::class);
+        $responseFactory = $objectProphecy->reveal();
 
-        $fluid = $sut->setResponseFactory($response_factory);
-        $this->assertEquals($fluid, $sut);
+        $fluid = $twigRequestHandler->setResponseFactory($responseFactory);
+        $this->assertEquals($fluid, $twigRequestHandler);
     }
 }

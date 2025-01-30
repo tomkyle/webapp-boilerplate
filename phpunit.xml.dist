@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	colors="true"
-	stopOnFailure="true"
-	bootstrap="tests/bootstrap.php"
-	beStrictAboutCoversAnnotation="true"
-	verbose="true"
-	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" stopOnFailure="true" testdox="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd" cacheDirectory=".phpunit.cache" beStrictAboutCoverageMetadata="true">
 
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory>src</directory>
-      <directory>bin</directory>
-      <directory>core</directory>
-    </include>
+  <coverage>
     <report>
       <clover outputFile="tests/build/clover.xml"/>
       <html outputDirectory="tests/build/html/"/>
@@ -20,22 +9,32 @@
     </report>
   </coverage>
 
+  <testsuites>
+    <testsuite name="unit">
+      <directory>tests/Unit</directory>
+    </testsuite>
+		<testsuite name="integration">
+			<directory>tests/Integration</directory>
+		</testsuite>
+		<testsuite name="functional">
+			<directory>tests/Functional</directory>
+		</testsuite>
+  </testsuites>
+
 	<php>
 		<var name="LOG_STREAM" value="php://stdout" />
 		<var name="LOG_LEVEL" value="info" />
 	</php>
 
-  <testsuites>
-    <testsuite name="unit">
-      <directory>tests/unit</directory>
-    </testsuite>
-    <testsuite name="integration">
-      <directory>tests/integration</directory>
-    </testsuite>
-  </testsuites>
-
   <logging>
     <testdoxHtml outputFile="tests/build/testdox.html"/>
     <testdoxText outputFile="tests/build/testdox.txt"/>
   </logging>
+
+  <source>
+    <include>
+      <directory>src</directory>
+    </include>
+  </source>
+
 </phpunit>

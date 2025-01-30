@@ -1,5 +1,5 @@
 {
-  "name": "tomkyle/webapp-boilerplate",
+  "name": "tomkyle-webapp-boilerplate",
   "author": "Carsten Witt <tomkyle@posteo.de>",
   "private": true,
   "devDependencies": {
@@ -11,6 +11,7 @@
     "apache-server-configs": "^6.0.0",
     "babel-loader": "^9.1",
     "bootstrap": "^5.3.0",
+    "chokidar-cli": "^3.0.0",
     "css-loader": "^6.8",
     "cssnano": "^6.0",
     "exports-loader": "^4.0",
@@ -27,6 +28,7 @@
     "imports-loader": "^4.0",
     "jshint": "^2.13",
     "jshint-stylish": "^2.2",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.63",
     "sass-loader": "^13.3",
     "style-loader": "^3.3",
@@ -48,6 +50,28 @@
   "scripts": {
     "dev": "npx gulp && npx workbox-cli injectManifest",
     "build": "NODE_ENV=production npx gulp && NODE_ENV=production npx workbox-cli injectManifest",
-    "lighthouse": "npx lhci autorun --config lighthouserc.js"
+
+    "lighthouse": "npm-run-all -s build lighthouse:*",
+    "lighthouse:run": "npx lhci autorun --config lighthouserc.js",
+
+    "watch": "npm-run-all -p watch:*",
+
+    "watch:tests":     "chokidar \"tests/**/*.php\"     -c \"npm run phpunit:short {path} && npm run rector {path}\"",
+    "watch:src":       "chokidar \"src/**/*.php\"       -c \"vendor/bin/frt {path} && npm run phpstan {path} && npm run rector {path}\"",
+    "watch:resources": "chokidar \"core/**/*.php\"      -c \"npm run phpunit:integration\"",
+
+    "rector": "./vendor/bin/rector process --dry-run",
+    "rector:apply": "./vendor/bin/rector process",
+
+    "phpcs"       : "./vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+    "phpcs:apply" : "./vendor/bin/php-cs-fixer fix --verbose --diff",
+
+    "phpstan":             "./vendor/bin/phpstan --no-progress analyse",
+
+    "phpunit":             "./vendor/bin/phpunit",
+    "phpunit:short":       "npm run phpunit -- --no-coverage",
+    "phpunit:unit":        "npm run phpunit -- --testsuite unit",
+    "phpunit:integration": "npm run phpunit -- --testsuite integration",
+    "phpunit:functional":  "npm run phpunit -- --testsuite functional"
   }
 }

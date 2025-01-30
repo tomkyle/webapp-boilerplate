@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Integration;
+namespace tests\Functional;
 
 use tests\LoggerTrait;
 use Slim\Psr7\Factory\ServerRequestFactory;
@@ -15,6 +15,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Container\ContainerInterface;
+use UnexpectedValueException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 
 use function App\dotenv;
 
@@ -28,7 +32,7 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
      *
      * @var array<mixed[]>
      */
-    public static $app_routes = array();
+    public static $app_routes = [];
 
 
     /**
@@ -37,7 +41,7 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
     public $server_request_factory;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->server_request_factory = new ServerRequestFactory();
@@ -46,12 +50,10 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
 
     public static function createApp(): \Slim\App
     {
-        $_SESSION = array();
+        $_SESSION = [];
         $dic = require __DIR__ . '/../../core/container.php';
         $dic->set(LoggerInterface::class, static::getLogger());
-
-        $app = $dic->get(\Slim\App::class);
-        return $app;
+        return $dic->get(\Slim\App::class);
     }
 
 
@@ -63,12 +65,16 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
      */
     public static function createRoutes(): array
     {
-        if (!empty(static::$app_routes)) {
+        if (static::$app_routes !== []) {
             return static::$app_routes;
         }
 
         $app = static::createApp() ;
         $container = $app->getContainer();
+        if (!$container instanceOf ContainerInterface) {
+            throw new UnexpectedValueException("Slim app’s getContainer method did not return ContainerInterface");
+        }
+
         $routes = $container->get('App.Routes');
 
         static::$app_routes = (array) $routes;
@@ -85,8 +91,6 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
      * @param string $method The HTTP method
      * @param string|UriInterface $uri The URI
      * @param string[] $serverParams The server parameters
-     *
-     * @return ServerRequestInterface
      */
     protected function createRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
@@ -99,25 +103,26 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provideAppRoutes
      */
-    public function testRouteResponse(string $url, string $via, int $status_code, string $content_type): void
+    #[DataProvider('provideAppRoutes')]
+     public function testRouteResponse(string $url, string $via, int $status_code, string $content_type): void
     {
         // The SLIM_BASE_PATH plays a role in slim.php;
         // and must be added here
         $url = dotenv('SLIM_BASE_PATH') . $url;
-        $request = $this->createRequest($via, $url);
+        $serverRequest = $this->createRequest($via, $url);
 
         $app = static::createApp() ;
 
         try {
             $info_msg = sprintf("%s %s\nshould return %s with status %s", $via, $url, $content_type, $status_code);
             static::getLogger()->debug($info_msg);
-            $response = $app->handle($request);
+            $response = $app->handle($serverRequest);
 
             $this->assertInstanceOf(ResponseInterface::class, $response);
             $this->assertEquals($status_code, $response->getStatusCode());
             $this->assertEquals($content_type, $response->getHeaderLine('Content-Type'));
-        } catch (\Slim\Exception\HttpNotFoundException $e) {
-            $msg = sprintf("Not found: %s %s\n", $via, $request->getUri()->__toString());
+        } catch (\Slim\Exception\HttpNotFoundException) {
+            $msg = sprintf("Not found: %s %s\n", $via, $serverRequest->getUri()->__toString());
             static::getLogger()->error($msg);
         }
     }
@@ -126,13 +131,13 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array<mixed[]>
      */
-    public function provideAppRoutes(): array
+    public static function provideAppRoutes(): array
     {
         $routes = static::createRoutes() ;
 
-        $data_provider = array();
+        $data_provider = [];
         foreach ($routes as $route_name => $route) {
-            $route_fixtures = ($route['testFixtures'] ?? array()) ?: array();
+            $route_fixtures = ($route['testFixtures'] ?? []) ?: [];
 
             if (empty($route_fixtures)) {
                 $url = $route['url'];
@@ -141,7 +146,7 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
                 $content_type = 'text/html';
 
                 $fixture_label = sprintf("Route '%s' should return %s with status %s", $route_name, $content_type, $status);
-                $data_provider[$fixture_label] = array($url, $via, $status, $content_type);
+                $data_provider[$fixture_label] = [$url, $via, $status, $content_type];
 
                 continue;
             }
@@ -154,7 +159,7 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
 
                 $fixture_label = sprintf("Route '%s' w/ '%s' should return %s with status %s", $route_name, $fixture_name, $content_type, $status);
 
-                $data_provider[$fixture_label] = array($url, $via, $status, $content_type);
+                $data_provider[$fixture_label] = [$url, $via, $status, $content_type];
             }
         }
 

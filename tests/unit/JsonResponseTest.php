@@ -21,41 +21,41 @@ class JsonResponseTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiation(): JsonResponse
     {
-        $sut = new JsonResponse(array());
+        $jsonResponse = new JsonResponse([]);
 
-        $this->assertInstanceOf(RequestHandlerInterface::class, $sut);
+        $this->assertInstanceOf(RequestHandlerInterface::class, $jsonResponse);
 
-        return $sut;
+        return $jsonResponse;
     }
 
 
     /**
      * @depends testInstantiation
      */
-    public function testDataSetter(JsonResponse $sut): void
+    public function testDataSetter(JsonResponse $jsonResponse): void
     {
-        $fluid = $sut->setData(array());
-        $this->assertEquals($fluid, $sut);
+        $fluid = $jsonResponse->setData([]);
+        $this->assertEquals($fluid, $jsonResponse);
     }
 
 
     /**
      * @depends testInstantiation
      */
-    public function testJsonOptionsSetter(JsonResponse $sut): void
+    public function testJsonOptionsSetter(JsonResponse $jsonResponse): void
     {
-        $fluid = $sut->setJsonOptions(0);
-        $this->assertEquals($fluid, $sut);
+        $fluid = $jsonResponse->setJsonOptions(0);
+        $this->assertEquals($fluid, $jsonResponse);
     }
 
 
     /**
      * @depends testInstantiation
      */
-    public function testContentTypeSetter(JsonResponse $sut): void
+    public function testContentTypeSetter(JsonResponse $jsonResponse): void
     {
-        $fluid = $sut->setContentType('application/manifest+json');
-        $this->assertEquals($fluid, $sut);
+        $fluid = $jsonResponse->setContentType('application/manifest+json');
+        $this->assertEquals($fluid, $jsonResponse);
     }
 
 
@@ -63,12 +63,12 @@ class JsonResponseTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testInstantiation
      */
-    public function testResponseFactorySetter(JsonResponse $sut): void
+    public function testResponseFactorySetter(JsonResponse $jsonResponse): void
     {
-        $response_factory_mock = $this->prophesize(ResponseFactoryInterface::class);
-        $response_factory = $response_factory_mock->reveal();
+        $objectProphecy = $this->prophesize(ResponseFactoryInterface::class);
+        $responseFactory = $objectProphecy->reveal();
 
-        $fluid = $sut->setResponseFactory($response_factory);
-        $this->assertEquals($fluid, $sut);
+        $fluid = $jsonResponse->setResponseFactory($responseFactory);
+        $this->assertEquals($fluid, $jsonResponse);
     }
 }

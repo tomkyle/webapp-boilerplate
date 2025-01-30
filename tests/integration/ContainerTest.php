@@ -11,6 +11,8 @@ namespace tests\Integration;
 
 use tests\LoggerTrait;
 use Psr\Container\ContainerInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 
 class ContainerTest extends \PHPUnit\Framework\TestCase
 {
@@ -25,13 +27,11 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     }
 
 
-    /**
-     * @dataProvider provideMostImportantClassNames
-     * @depends testContainerCreation
-     */
-    public function testInstantiationOfImportantThings(string $php_class, ContainerInterface $sut): void
+    #[Depends('testContainerCreation')]
+    #[DataProvider('provideMostImportantClassNames')]
+    public function testInstantiationOfImportantThings(string $php_class, ContainerInterface $container): void
     {
-        $result = $sut->get($php_class);
+        $result = $container->get($php_class);
         $this->assertInstanceOf($php_class, $result);
     }
 
@@ -39,9 +39,9 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array<mixed[]>
      */
-    public function provideMostImportantClassNames(): array
+    public static function provideMostImportantClassNames(): array
     {
-        $classes = array(
+        $classes = [
             \Dotenv\Dotenv::class,
             \Psr\Log\LoggerInterface::class,
             \Germania\ConfigReader\ConfigReaderInterface::class,
@@ -54,9 +54,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
             \Slim\App::class,
             \Twig\Environment::class,
             \Symfony\Component\Console\Application::class
-        );
-        return array_combine($classes, array_map(function ($c) {
-            return [ $c ];
-        }, $classes));
+        ];
+        return array_combine($classes, array_map(static fn($c) => [ $c ], $classes));
     }
 }
