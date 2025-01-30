@@ -73,17 +73,6 @@
 
 		"lighthouse": "npm run lighthouse",
 
-		"phpunit": "phpunit --testdox",
-
-		"phpstan": "phpstan analyse",
-
-		"phpcs": [ "@phpcs:dry" ],
-		"phpcs:dry": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --verbose --diff --dry-run",
-		"phpcs:apply": [
-			"PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --verbose --diff",
-			"@test:unit"
-		],
-
 		"codecept": "codecept run",
 
 		"test": [
