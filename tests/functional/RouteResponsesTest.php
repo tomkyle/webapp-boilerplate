@@ -17,6 +17,8 @@ use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Container\ContainerInterface;
 use UnexpectedValueException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 
 use function App\dotenv;
 
@@ -105,7 +107,8 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provideAppRoutes
      */
-    public function testRouteResponse(string $url, string $via, int $status_code, string $content_type): void
+    #[DataProvider('provideAppRoutes')]
+     public function testRouteResponse(string $url, string $via, int $status_code, string $content_type): void
     {
         // The SLIM_BASE_PATH plays a role in slim.php;
         // and must be added here
@@ -132,7 +135,7 @@ class RouteResponsesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array<mixed[]>
      */
-    public function provideAppRoutes(): array
+    public static function provideAppRoutes(): array
     {
         $routes = static::createRoutes() ;
 

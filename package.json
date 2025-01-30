@@ -56,15 +56,20 @@
 
     "watch": "npm-run-all -p watch:*",
 
-    "watch:tests":     "chokidar \"tests/**/*.php\"     -c \"npm run phpunit {path}\"",
-    "watch:src":       "chokidar \"src/**/*.php\"       -c \"npm run phpunit:unit\"",
+    "watch:tests":     "chokidar \"tests/**/*.php\"     -c \"npm run phpunit:short {path} && npm run rector {path}\"",
+    "watch:src":       "chokidar \"src/**/*.php\"       -c \"vendor/bin/frt {path} && npm run phpstan {path} && npm run rector {path}\"",
     "watch:resources": "chokidar \"core/**/*.php\"      -c \"npm run phpunit:integration\"",
-    "watch:bugs":      "chokidar \"**/*.php\"           -c \"npm run phpstan {path}\"",
 
-    "phpstan": "./vendor/bin/phpstan analyse",
+    "rector": "./vendor/bin/rector process --dry-run",
+    "rector:apply": "./vendor/bin/rector process",
 
-    "phpunit": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --configuration phpunit.npm.xml",
+    "phpcs"       : "./vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+    "phpcs:apply" : "./vendor/bin/php-cs-fixer fix --verbose --diff",
 
+    "phpstan":             "./vendor/bin/phpstan --no-progress analyse",
+
+    "phpunit":             "./vendor/bin/phpunit",
+    "phpunit:short":       "npm run phpunit -- --no-coverage",
     "phpunit:unit":        "npm run phpunit -- --testsuite unit",
     "phpunit:integration": "npm run phpunit -- --testsuite integration",
     "phpunit:functional":  "npm run phpunit -- --testsuite functional"
