@@ -39,7 +39,7 @@
 		"mnapoli/silly": "^1.8"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^11.0",
+		"phpunit/phpunit": "^11.5",
 		"phpspec/prophecy-phpunit": "^2.0.1",
 		"phpstan/phpstan": "^2.0",
 		"friendsofphp/php-cs-fixer": "^2.0|^3.11",
