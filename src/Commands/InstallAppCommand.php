@@ -17,14 +17,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Attribute\AsCommand;
 
 use Symfony\Component\Process;
 
+#[AsCommand(
+    name: 'install',
+    description: 'Perform installation'
+)]
 class InstallAppCommand extends Command
 {
-    // Name of the command (the part after "bin/console")
-    protected static $defaultName = 'install';
-
 
     /**
      * @var callable
