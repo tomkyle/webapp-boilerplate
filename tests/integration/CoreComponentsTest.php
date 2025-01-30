@@ -33,7 +33,7 @@ class CoreComponentsTest extends \PHPUnit\Framework\TestCase
      */
     public static function provideContainerDefinitionFiles(): array
     {
-        $inc_files = array(
+        $inc_files = [
             'actions.php',
             'app.php',
             'configs.php',
@@ -44,10 +44,8 @@ class CoreComponentsTest extends \PHPUnit\Framework\TestCase
             'psr.php',
             'slim.php',
             'templating.php',
-        );
-        return array_combine($inc_files, array_map(function ($c) {
-            return [ $c ];
-        }, $inc_files));
+        ];
+        return array_combine($inc_files, array_map(fn($c) => [ $c ], $inc_files));
     }
 
 
@@ -78,9 +76,9 @@ class CoreComponentsTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testBuildingDependencyInjectionContainer
      */
-    public function createSlimApplication(ContainerInterface $dic): \Slim\App
+    public function createSlimApplication(ContainerInterface $container): \Slim\App
     {
-        $sut = $dic->get(\Slim\App::class);
+        $sut = $container->get(\Slim\App::class);
 
         $this->assertInstanceOf(\Slim\App::class, $sut);
 

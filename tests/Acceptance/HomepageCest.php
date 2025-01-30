@@ -6,15 +6,15 @@ use Tests\Support\AcceptanceTester;
 
 class HomepageCest
 {    
-    public function _before(AcceptanceTester $I)
+    public function _before(AcceptanceTester $acceptanceTester)
     {
     }
 
-    public function seeHeading(AcceptanceTester $I)
+    public function seeHeading(AcceptanceTester $acceptanceTester)
     {
-        $I->amOnPage('/');
-        $I->wantTo('Test the Homepage');
-        $I->see('Heading 1', '/html/body/h1');
+        $acceptanceTester->amOnPage('/');
+        $acceptanceTester->wantTo('Test the Homepage');
+        $acceptanceTester->see('Heading 1', '/html/body/h1');
     }
 
 }

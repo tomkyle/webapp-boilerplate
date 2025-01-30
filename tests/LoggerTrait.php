@@ -53,6 +53,7 @@ trait LoggerTrait
         if (!empty(static::$loglevel)) {
             return static::$loglevel;
         }
+
         static::setLogLevel($GLOBALS['LOG_LEVEL'] ?? \Psr\Log\LogLevel::DEBUG);
         return static::$loglevel;
     }
@@ -71,26 +72,11 @@ trait LoggerTrait
         $loglevel = static::getLogLevel();
 
         /* @phpstan-ignore-next-line */
-        $handler = new StreamHandler($stream, $loglevel);
-
-        // As defined in \Monolog\Formatter\LineFormatter::SIMPLE_FORMAT
-        $format      = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
-        // Use default (same as omit parameter)
-        $format = null;
-        // We omit the %channel% name
-        $format      = "[%datetime%] %level_name%: %message% %context% %extra%\n";
-
-
-        // As defined in \Monolog\Formatter\NormalizerFormatter::SIMPLE_DATE
-        $date_format = "Y-m-d\TH:i:sP";
-        // Use default (same as omit parameter)
-        $date_format = null;
-        // We use shorter time format
-        $date_format = "H:i:s.v";
+        $streamHandler = new StreamHandler($stream, $loglevel);
 
         // Disable until bramus/monolog-colored-line-formatter 'format' method has proper rturn type
         # $handler->setFormatter(new ColoredLineFormatter(null, $format, $date_format));
 
-        return new Logger("phpunit", [$handler]);
+        return new Logger("phpunit", [$streamHandler]);
     }
 }

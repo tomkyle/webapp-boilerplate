@@ -33,9 +33,9 @@ class SillyCreateCustomFileFromDist
     public $app;
 
 
-    public function __construct(Silly\Application $app, string $dist_file, string $custom_file)
+    public function __construct(Silly\Application $application, string $dist_file, string $custom_file)
     {
-        $this->app = $app;
+        $this->app = $application;
         $this->dist_file = $dist_file;
         $this->custom_file = $custom_file;
     }
@@ -54,14 +54,14 @@ class SillyCreateCustomFileFromDist
             "Custom file does not exist and must be created.",
         ]);
 
-        $question = new ConfirmationQuestion('Create? (y/n) ', false);
+        $confirmationQuestion = new ConfirmationQuestion('Create? (y/n) ', false);
 
         $helper = $this->app->getHelperSet()->get('question');
 
         // PhpStan shall ignore
         // "Call to an undefined method Symfony\Component\Console\Helper\HelperInterface::ask()."
         /** @phpstan-ignore-next-line */
-        if ($yes || $helper->ask($input, $output, $question)) {
+        if ($yes || $helper->ask($input, $output, $confirmationQuestion)) {
             if (!is_file($this->dist_file)) {
                 $output->writeln("Dist file not found.");
                 return Command::FAILURE;

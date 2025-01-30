@@ -47,12 +47,10 @@ class InstallAppCommand extends Command
     /**
      * @param string[] $directories Utility Directories
      */
-    public function __construct(array $directories = array())
+    public function __construct(array $directories = [])
     {
         $this->directories = $directories;
-        $this->setProcessFactory(function (...$args) {
-            return new Process\Process(...$args);
-        });
+        $this->setProcessFactory(fn(...$args) => new Process\Process(...$args));
         parent::__construct();
     }
 
@@ -87,10 +85,10 @@ class InstallAppCommand extends Command
 
 
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
-        $io = new SymfonyStyle($input, $output);
-        $io->title('Install application');
+        $symfonyStyle = new SymfonyStyle($input, $output);
+        $symfonyStyle->title('Install application');
 
         $verbose = $output->isVerbose();
 
@@ -101,92 +99,96 @@ class InstallAppCommand extends Command
         try {
             $directories = array_filter($this->directories);
 
-            if (!empty($directories)) {
-                $io->section('Create utility directories');
+            if ($directories !== []) {
+                $symfonyStyle->section('Create utility directories');
             }
 
-            foreach ($directories as $dir) {
-                if (!is_dir($dir)) {
-                    $process = ($this->process_factory)(['mkdir', '-p', $dir]);
-                    $this->runProcess($process, $output, $io, $verbose);
+            foreach ($directories as $directory) {
+                if (!is_dir($directory)) {
+                    $process = ($this->process_factory)(['mkdir', '-p', $directory]);
+                    $this->runProcess($process, $output, $symfonyStyle, $verbose);
                 } else {
-                    $output->writeln(sprintf("Directory '%s' exists", $dir));
+                    $output->writeln(sprintf("Directory '%s' exists", $directory));
                 }
 
-                if (is_writable($dir)) {
-                    $process = ($this->process_factory)(['chmod', '0775', $dir]);
-                    $this->runProcess($process, $output, $io, $verbose);
+                if (is_writable($directory)) {
+                    $process = ($this->process_factory)(['chmod', '0775', $directory]);
+                    $this->runProcess($process, $output, $symfonyStyle, $verbose);
                 } else {
-                    $msg = sprintf("Can't chmod on directory '%s'", $dir);
+                    $msg = sprintf("Can't chmod on directory '%s'", $directory);
                     $output->writeln($msg);
                 }
             }
 
 
-            if (!empty($this->pem_directory) and $is_dev) {
-                $io->section('Development SSL certificates');
+            if (!empty($this->pem_directory) && $is_dev) {
+                $symfonyStyle->section('Development SSL certificates');
                 $glob_str = sprintf("%s/*.pem", $this->pem_directory);
                 $pem_keys = glob($glob_str);
-                if (!empty($pem_keys)) {
+                if ($pem_keys !== [] && $pem_keys !== false) {
                     $output->writeln("Found certificates:");
                     $output->writeln($pem_keys);
                 } else {
-                    $io->caution([
+                    $symfonyStyle->caution([
                         "No development certificates found.",
                         "See README on how to install using 'mkcert'"
                     ]);
                 }
-                $io->newLine();
+
+                $symfonyStyle->newLine();
             }
 
 
 
-            $io->section('Install Composer dependencies');
+            $symfonyStyle->section('Install Composer dependencies');
 
             $composer_install_params = ['composer', 'install'];
             if ($is_not_dev) {
                 $composer_install_params[] = "--no-dev";
             }
+
             if ($verbose) {
                 $composer_install_params[] = "-v";
             }
+
             $process = ($this->process_factory)($composer_install_params);
-            $this->runProcess($process, $output, $io, $verbose);
+            $this->runProcess($process, $output, $symfonyStyle, $verbose);
 
 
 
 
 
-            $io->section('Dump Composer autoloader');
+            $symfonyStyle->section('Dump Composer autoloader');
 
             $process = ($this->process_factory)(['composer', 'dump-autoload', '--optimize']);
-            $this->runProcess($process, $output, $io, $verbose);
+            $this->runProcess($process, $output, $symfonyStyle, $verbose);
 
 
 
 
 
-            $io->section('Install node/npm/JS dependencies');
+            $symfonyStyle->section('Install node/npm/JS dependencies');
 
             $npm_install_params = ['npm', 'install'];
             if ($is_dev) {
                 $npm_install_params[] = "--dev";
             }
+
             $process = ($this->process_factory)($npm_install_params);
-            $this->runProcess($process, $output, $io, $verbose);
+            $this->runProcess($process, $output, $symfonyStyle, $verbose);
 
 
 
 
-            $io->section('Repo information: git remote');
+            $symfonyStyle->section('Repo information: git remote');
             $git_remote_args = array_filter(['git', 'remote', $verbose ? '-v' : null]);
             $process = ($this->process_factory)($git_remote_args);
-            $this->runProcess($process, $output, $io, $verbose);
+            $this->runProcess($process, $output, $symfonyStyle, $verbose);
 
 
 
             try {
-                $io->section('Repo information: git describe');
+                $symfonyStyle->section('Repo information: git describe');
                 $process = ($this->process_factory)(['git', 'describe']);
                 $process->mustRun();
                 $output->writeln($process->getOutput());
@@ -199,11 +201,12 @@ class InstallAppCommand extends Command
                         "In this case, this can be ignored; run installer with -v option otherwise."
                     ]);
                 }
-                $io->newLine();
+
+                $symfonyStyle->newLine();
             } catch (\Throwable $e) {
-                $io->newLine();
-                $io->error(array_filter([
-                   get_class($e),
+                $symfonyStyle->newLine();
+                $symfonyStyle->error(array_filter([
+                   $e::class,
                    $e->getMessage(),
                    $verbose ? sprintf("Line %s in '%s'", $e->getLine(), $e->getFile()) : null
                 ]));
@@ -211,32 +214,33 @@ class InstallAppCommand extends Command
 
 
 
-            $io->section('Repo information: git status');
+            $symfonyStyle->section('Repo information: git status');
             $process = ($this->process_factory)(['git', 'status']);
-            $this->runProcess($process, $output, $io, $verbose);
-        } catch (Process\Exception\ProcessFailedException $e) {
-            $io->newLine();
-            $io->error(array_filter([
-               get_class($e),
-               $e->getMessage(),
-               $verbose ? sprintf("Line %s in '%s'", $e->getLine(), $e->getFile()) : null
+            $this->runProcess($process, $output, $symfonyStyle, $verbose);
+        } catch (Process\Exception\ProcessFailedException $processFailedException) {
+            $symfonyStyle->newLine();
+            $symfonyStyle->error(array_filter([
+               $processFailedException::class,
+               $processFailedException->getMessage(),
+               $verbose ? sprintf("Line %s in '%s'", $processFailedException->getLine(), $processFailedException->getFile()) : null
             ]));
         }
+
         return Command::SUCCESS;
     }
 
 
-    protected function runProcess(Process\Process $process, OutputInterface $output, SymfonyStyle $io, bool $verbose): void
+    protected function runProcess(Process\Process $process, OutputInterface $output, SymfonyStyle $symfonyStyle, bool $verbose): void
     {
         try {
             $process->mustRun();
             $output->writeln($process->getOutput());
-        } catch (\Throwable $e) {
-            $io->newLine();
-            $io->error(array_filter([
-               get_class($e),
-               $e->getMessage(),
-               $verbose ? sprintf("Line %s in '%s'", $e->getLine(), $e->getFile()) : null
+        } catch (\Throwable $throwable) {
+            $symfonyStyle->newLine();
+            $symfonyStyle->error(array_filter([
+               $throwable::class,
+               $throwable->getMessage(),
+               $verbose ? sprintf("Line %s in '%s'", $throwable->getLine(), $throwable->getFile()) : null
             ]));
         }
     }

@@ -20,34 +20,34 @@ class InstallAppCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiation(): InstallAppCommand
     {
-        $sut = new InstallAppCommand();
+        $installAppCommand = new InstallAppCommand();
 
-        $this->assertInstanceOf(Console\Command\Command::class, $sut);
+        $this->assertInstanceOf(Console\Command\Command::class, $installAppCommand);
 
 
-        return $sut;
+        return $installAppCommand;
     }
 
     /**
      * @depends testInstantiation
      */
-    public function testExecution(InstallAppCommand $sut): void
+    public function testExecution(InstallAppCommand $installAppCommand): void
     {
         // Mock internal processes inside SUT
-        $sut->setProcessFactory(fn () => new Process(['echo', 'foo']));
+        $installAppCommand->setProcessFactory(fn () => new Process(['echo', 'foo']));
 
         $application = new Console\Application();
-        $application->add($sut);
+        $application->add($installAppCommand);
 
-        $command_name = $sut->getName();
+        $command_name = $installAppCommand->getName();
         $command = $application->find($command_name);
 
-        $tester = new Console\Tester\CommandTester($command);
-        $tester->execute([]);
+        $commandTester = new Console\Tester\CommandTester($command);
+        $commandTester->execute([]);
 
-        $tester->assertCommandIsSuccessful();
+        $commandTester->assertCommandIsSuccessful();
 
-        $command_output = $tester->getDisplay();
+        $command_output = $commandTester->getDisplay();
 
         $this->assertMatchesRegularExpression("/Install Composer dependencies/", $command_output);
         $this->assertMatchesRegularExpression("/Dump Composer autoloader/", $command_output);
