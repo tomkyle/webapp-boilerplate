@@ -8742,16 +8742,16 @@
         },
         {
             "name": "tomkyle/find-run-test",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tomkyle/frt.git",
-                "reference": "d299e374f1b4b00c90caf69ad9cc1bb6f601ee7e"
+                "url": "https://github.com/tomkyle/find-run-test.git",
+                "reference": "3f5419e707cea8bf36ff7b292529aab2e7a4fd13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tomkyle/frt/zipball/d299e374f1b4b00c90caf69ad9cc1bb6f601ee7e",
-                "reference": "d299e374f1b4b00c90caf69ad9cc1bb6f601ee7e",
+                "url": "https://api.github.com/repos/tomkyle/find-run-test/zipball/3f5419e707cea8bf36ff7b292529aab2e7a4fd13",
+                "reference": "3f5419e707cea8bf36ff7b292529aab2e7a4fd13",
                 "shasum": ""
             },
             "require": {
@@ -8785,10 +8785,10 @@
                 "unit testing"
             ],
             "support": {
-                "issues": "https://github.com/tomkyle/frt/issues",
-                "source": "https://github.com/tomkyle/frt/tree/1.0.6"
+                "issues": "https://github.com/tomkyle/find-run-test/issues",
+                "source": "https://github.com/tomkyle/find-run-test/tree/1.0.7"
             },
-            "time": "2025-01-08T15:18:50+00:00"
+            "time": "2025-04-22T15:18:20+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -8859,6 +8859,6 @@
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
